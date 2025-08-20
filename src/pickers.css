@@ -1,0 +1,151 @@
+/* ======= PICKERS COMO VENTANA EMERGENTE (MODAL) ======= */
+
+.display-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.display-btn:hover,
+.display-btn:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.display-icon { font-size: 1.2rem; }
+.display-text { font-weight: 500; color: #0f172a; }
+
+.picker-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 11000;
+  animation: picker-fade-in 0.2s ease;
+}
+
+@keyframes picker-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.picker-modal {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 16px 40px rgba(0,0,0,.25);
+  padding: 16px;
+  animation: picker-slide-in 0.25s ease;
+}
+
+@keyframes picker-slide-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.calendar-modal { max-width: 420px; }
+.time-modal { max-width: 420px; }
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.current-month {
+  margin: 0;
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: capitalize;
+}
+
+.month-nav {
+  border: none;
+  background: #eef2ff;
+  color: #4338ca;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.month-nav:hover { background: #e0e7ff; }
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin: 8px 0;
+  color: #64748b;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+
+.calendar-day {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 10px;
+  height: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.calendar-day.current-month { background: #ffffff; }
+.calendar-day.other-month { opacity: 0.45; }
+.calendar-day.today { border-color: #4f46e5; }
+.calendar-day.selected { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.calendar-day.past { opacity: 0.4; cursor: not-allowed; }
+.calendar-day:hover:not(.past):not(.selected) { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+
+.picker-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+
+.time-picker-header h4 { margin: 4px 0 12px 0; }
+.time-picker-header .time-helper{ margin: 0 0 12px 0; color:#64748b; font-size:.9rem; }
+.quick-times h5, .custom-time h5 { margin: 12px 0 8px 0; color: #64748b; }
+.quick-time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.quick-time-btn { padding: 10px 12px; border-radius: 10px; border: 1px solid #e2e8f0; background: #ffffff; cursor: pointer; font-weight: 600; }
+.quick-time-btn:hover { background: #f1f5f9; }
+.custom-time-input { width: 100%; }
+
+/* Controles interactivos de hora */
+.time-stepper{ display:flex; align-items:center; justify-content:center; gap:8px; margin: 8px 0 12px 0; }
+.step-group{ display:flex; align-items:center; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:6px; }
+.step-btn{ border:none; background:#eef2ff; color:#4338ca; border-radius:8px; width:28px; height:28px; font-weight:700; cursor:pointer; }
+.step-btn:hover{ background:#e0e7ff; }
+.time-display-box{ min-width:36px; text-align:center; font-weight:700; }
+.step-sep{ font-weight:700; }
+
+.time-actions{ display:flex; justify-content:flex-end; margin: 8px 0 12px 0; }
+.ok-btn{ padding:10px 16px; border-radius: 8px; line-height: 1; }
+
+.date-input-group, .time-input-group { width: 100%; }
+.input-label { font-weight: 600; color: #64748b; }
+
+@media (max-width: 420px) {
+  .picker-modal { padding: 12px; }
+  .calendar-day { height: 36px; }
+}
+
+

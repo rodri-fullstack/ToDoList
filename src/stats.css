@@ -1,0 +1,68 @@
+/* Estadísticas por categoría */
+.category-stats { margin-top: 16px; }
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.category-stat {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+
+.category-stat h4 {
+  margin: 0 0 10px 0;
+  font-size: 0.95rem;
+}
+
+.category-numbers {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-numbers .total-num,
+.category-numbers .pending-num,
+.category-numbers .completed-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 1px solid transparent;
+}
+
+.category-numbers .total-num {
+  background: #eef2ff;
+  color: #4338ca;
+  border-color: #c7d2fe;
+}
+.category-numbers .total-num::before { content: 'T'; font-weight: 800; }
+
+.category-numbers .pending-num {
+  background: #fff7ed;
+  color: #9a3412;
+  border-color: #fed7aa;
+}
+.category-numbers .pending-num::before { content: 'P'; font-weight: 800; }
+
+.category-numbers .completed-num {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+.category-numbers .completed-num::before { content: 'C'; font-weight: 800; }
+
+@media (max-width: 768px) {
+  .category-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+}
+
+

@@ -16,5 +16,13 @@ export default function useLocalStorage(key, initialValue){
     }catch{}
   }, [key, value])
 
+  // Sincronizar el estado cuando cambia la clave
+  useEffect(()=>{
+    try{
+      const item = window.localStorage.getItem(key)
+      setValue(item ? JSON.parse(item) : initialValue)
+    }catch{}
+  }, [key])
+
   return [value, setValue]
 }
