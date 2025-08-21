@@ -2238,6 +2238,154 @@ button[type="button"]:hover {
   outline-offset: 2px;
 }
 
+/* ===== BORDES MEJORADOS PARA FORMULARIOS Y TAREAS ===== */
+/* Campos del formulario con bordes más visibles y efectos hover */
+input, textarea, select {
+  border: 2px solid #d1d5db !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  transition: all 0.3s ease !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  box-sizing: border-box !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  outline: none !important;
+  background: #fefefe !important;
+}
+
+input:hover:not(:focus), textarea:hover:not(:focus), select:hover:not(:focus) {
+  border-color: #6b7280 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Estilos específicos para el select */
+select {
+  cursor: pointer !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e") !important;
+  background-position: right 12px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px !important;
+  padding-right: 40px !important;
+}
+
+select:focus {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%233b82f6' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e") !important;
+}
+
+/* Tarjetas de tareas con bordes mejorados */
+.item {
+  border: 2px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  background: #ffffff !important;
+}
+
+.item:hover {
+  border-color: #9ca3af !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-1px) !important;
+}
+
+.task-card {
+  border: 1px solid #f3f4f6 !important;
+  border-radius: 8px !important;
+  background: #fafafa !important;
+  transition: all 0.2s ease !important;
+}
+
+.task-card:hover {
+  background: #f8fafc !important;
+  border-color: #e5e7eb !important;
+}
+
+/* Botones de acción con bordes más definidos */
+.action-btn {
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.action-btn:hover {
+  border-color: #9ca3af !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+.action-btn.edit-btn:hover {
+  border-color: #f59e0b !important;
+  background: #fef3c7 !important;
+}
+
+.action-btn.delete-btn:hover {
+  border-color: #ef4444 !important;
+  background: #fecaca !important;
+}
+
+/* Botón de estado con bordes más visibles */
+.status-btn {
+  border: 2px solid transparent !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.status-btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+.status-btn.pending {
+  border-color: #f59e0b !important;
+}
+
+.status-btn.completed {
+  border-color: #10b981 !important;
+}
+
+/* Labels con mejor contraste */
+.label {
+  font-weight: 600 !important;
+  color: #374151 !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+
+/* Botones del formulario mejorados */
+.btn {
+  border: 2px solid transparent !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  font-weight: 600 !important;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn.primary {
+  border-color: #3b82f6 !important;
+}
+
+.btn.secondary {
+  border-color: #6b7280 !important;
+}
+
+.btn.primary:hover {
+  border-color: #2563eb !important;
+}
+
+.btn.secondary:hover {
+  border-color: #4b5563 !important;
+}
+
 /* ===== EFECTO CONFETI POR TODA LA PANTALLA ===== */
 .confetti-container {
   position: fixed;
