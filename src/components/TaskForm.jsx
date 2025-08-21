@@ -62,14 +62,19 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
     })
   }
 
-  // Función para generar días del mes
+  // Función para generar días del mes (empezando en lunes)
   function generateDays() {
     const year = currentMonth.getFullYear()
     const month = currentMonth.getMonth()
     const firstDay = new Date(year, month, 1)
     const lastDay = new Date(year, month + 1, 0)
+    
+    // Calcular el primer día de la semana (lunes = 1, domingo = 0)
+    let firstDayOfWeek = firstDay.getDay()
+    if (firstDayOfWeek === 0) firstDayOfWeek = 7 // Domingo se convierte en 7
+    
     const startDate = new Date(firstDay)
-    startDate.setDate(startDate.getDate() - firstDay.getDay())
+    startDate.setDate(startDate.getDate() - (firstDayOfWeek - 1)) // Retroceder hasta el lunes
     
     const days = []
     const today = new Date()
@@ -268,13 +273,13 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
                     </div>
                     
                     <div className="calendar-weekdays">
-                      <span>Dom</span>
                       <span>Lun</span>
                       <span>Mar</span>
                       <span>Mié</span>
                       <span>Jue</span>
                       <span>Vie</span>
                       <span>Sáb</span>
+                      <span>Dom</span>
                     </div>
                     
                     <div className="calendar-days">

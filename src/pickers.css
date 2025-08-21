@@ -96,7 +96,7 @@
 
 .picker-modal {
   width: 100%;
-  max-width: 480px;
+  max-width: 400px;
   background: #ffffff;
   border-radius: 16px;
   border: 1px solid #e2e8f0;
@@ -149,73 +149,92 @@
 
 /* Responsive para navegación del calendario en móviles */
 @media (max-width: 768px) {
+  .calendar-header {
+    margin-bottom: 6px;
+  }
+  
   .month-nav {
-    min-width: 44px;
-    min-height: 44px;
-    font-size: 1.1rem;
-    padding: 8px 12px;
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 0.9rem;
+    padding: 6px 8px;
   }
   
   .current-month {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
+  .calendar-header {
+    margin-bottom: 4px;
+  }
+  
   .month-nav {
-    min-width: 40px;
-    min-height: 40px;
-    font-size: 1rem;
-    padding: 6px 10px;
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 0.8rem;
+    padding: 4px 6px;
   }
   
   .current-month {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }
 
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin: 8px 0;
+  gap: 4px;
+  margin: 6px 0;
   color: #64748b;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-align: center;
   width: 100%;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .calendar-days { 
   display: grid; 
   grid-template-columns: repeat(7, 1fr); 
-  gap: 6px; 
+  gap: 4px; 
   width: 100%;
 }
 
 .calendar-day {
   border: 1px solid #e2e8f0;
   background: #f8fafc;
-  border-radius: 10px;
-  height: 40px;
+  border-radius: 8px;
+  height: 32px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
+  min-height: 32px;
   box-sizing: border-box;
+  font-size: 0.85rem;
 }
 
 .calendar-day.current-month { background: #ffffff; }
 .calendar-day.other-month { opacity: 0.45; }
-.calendar-day.today { border-color: #4f46e5; }
-.calendar-day.selected { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.calendar-day.today { border-color: #3b82f6; background: #eff6ff; }
+.calendar-day.selected { 
+  background: #3b82f6; 
+  color: #ffffff; 
+  border-color: #3b82f6; 
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
+}
 .calendar-day.past { opacity: 0.4; cursor: not-allowed; }
-.calendar-day:hover:not(.past):not(.selected) { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.calendar-day:hover:not(.past):not(.selected) { 
+  transform: translateY(-1px); 
+  box-shadow: 0 2px 8px rgba(0,0,0,.08); 
+  background: #f1f5f9;
+}
 
 .picker-actions { 
   display: flex; 
@@ -226,6 +245,28 @@
 
 /* Responsive para acciones del picker en móviles */
 @media (max-width: 768px) {
+  .picker-modal {
+    max-width: 360px;
+    margin: 16px;
+  }
+  
+  .calendar-weekdays {
+    gap: 3px;
+    margin: 4px 0;
+    font-size: 0.7rem;
+  }
+  
+  .calendar-days {
+    gap: 3px;
+  }
+  
+  .calendar-day {
+    height: 28px;
+    min-height: 28px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+  
   .picker-actions {
     flex-direction: column;
     gap: 12px;
@@ -241,6 +282,28 @@
 }
 
 @media (max-width: 480px) {
+  .picker-modal {
+    max-width: 320px;
+    margin: 12px;
+  }
+  
+  .calendar-weekdays {
+    gap: 2px;
+    margin: 3px 0;
+    font-size: 0.65rem;
+  }
+  
+  .calendar-days {
+    gap: 2px;
+  }
+  
+  .calendar-day {
+    height: 24px;
+    min-height: 24px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+  }
+  
   .picker-actions {
     gap: 10px;
     margin-top: 14px;
@@ -253,6 +316,43 @@
 }
 
 @media (max-width: 360px) {
+  .picker-modal {
+    max-width: 280px;
+    margin: 8px;
+  }
+  
+  .calendar-header {
+    margin-bottom: 3px;
+  }
+  
+  .month-nav {
+    min-width: 24px;
+    min-height: 24px;
+    font-size: 0.7rem;
+    padding: 3px 5px;
+  }
+  
+  .current-month {
+    font-size: 0.7rem;
+  }
+  
+  .calendar-weekdays {
+    gap: 1px;
+    margin: 2px 0;
+    font-size: 0.6rem;
+  }
+  
+  .calendar-days {
+    gap: 1px;
+  }
+  
+  .calendar-day {
+    height: 20px;
+    min-height: 20px;
+    font-size: 0.7rem;
+    border-radius: 3px;
+  }
+  
   .picker-actions {
     gap: 8px;
     margin-top: 12px;
