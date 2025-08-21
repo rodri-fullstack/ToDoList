@@ -2238,11 +2238,16 @@ button[type="button"]:hover {
   outline-offset: 2px;
 }
 
-/* ===== EFECTO CONFETI ALREDEDOR DEL BOTÓN ===== */
+/* ===== EFECTO CONFETI POR TODA LA PANTALLA ===== */
 .confetti-container {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   z-index: 1000;
+  overflow: hidden;
 }
 
 .confetti {
@@ -2251,20 +2256,40 @@ button[type="button"]:hover {
   height: 8px;
   background: #f00;
   border-radius: 50%;
-  animation: confettiExplode 3s ease-out forwards;
+  animation: confettiFall 5s linear forwards;
   z-index: 1000;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
 }
 
-@keyframes confettiExplode {
+/* Variaciones de confeti */
+.confetti:nth-child(3n) {
+  width: 6px;
+  height: 6px;
+  border-radius: 0;
+  animation-duration: 4s;
+}
+
+.confetti:nth-child(5n) {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation-duration: 6s;
+}
+
+.confetti:nth-child(7n) {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation-duration: 3s;
+}
+
+@keyframes confettiFall {
   0% {
-    transform: translate(0, 0) scale(0);
-    opacity: 1;
-  }
-  50% {
+    transform: translateY(-10px) rotate(0deg);
     opacity: 1;
   }
   100% {
-    transform: translate(var(--end-x, 50px), var(--end-y, -50px)) scale(0);
+    transform: translateY(100vh) rotate(720deg);
     opacity: 0;
   }
 }

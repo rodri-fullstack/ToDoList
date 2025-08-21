@@ -71,61 +71,56 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
       // Si la tarea se está marcando como completada, mostrar confeti
       if (!task.completed) {
         showConfetti()
+      } else {
+        // Si se está marcando como pendiente, detener confeti abruptamente
+        stopConfetti()
       }
     }
   }
   
-  // Función para mostrar confeti alrededor del botón
+  // Función para mostrar confeti por toda la pantalla
   function showConfetti() {
     const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
-    const button = document.querySelector(`[data-task-id="${task.id}"] .status-btn`)
     
-    if (!button) return
-    
-    const buttonRect = button.getBoundingClientRect()
-    const buttonCenterX = buttonRect.left + buttonRect.width / 2
-    const buttonCenterY = buttonRect.top + buttonRect.height / 2
-    
-    // Crear contenedor de confeti relativo al botón
+    // Crear contenedor de confeti para toda la pantalla
     const confettiContainer = document.createElement('div')
     confettiContainer.className = 'confetti-container'
-    confettiContainer.style.position = 'absolute'
-    confettiContainer.style.left = buttonCenterX + 'px'
-    confettiContainer.style.top = buttonCenterY + 'px'
+    confettiContainer.style.position = 'fixed'
+    confettiContainer.style.top = '0'
+    confettiContainer.style.left = '0'
+    confettiContainer.style.width = '100vw'
+    confettiContainer.style.height = '100vh'
     confettiContainer.style.pointerEvents = 'none'
     confettiContainer.style.zIndex = '1000'
+    confettiContainer.setAttribute('data-task-confetti', task.id)
     
     document.body.appendChild(confettiContainer)
     
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 50; i++) {
       setTimeout(() => {
         const confetti = document.createElement('div')
         confetti.className = 'confetti'
         confetti.style.position = 'absolute'
-        confetti.style.left = '0px'
-        confetti.style.top = '0px'
-        confetti.style.width = '8px'
-        confetti.style.height = '8px'
+        confetti.style.left = Math.random() * 100 + 'vw'
+        confetti.style.top = '-10px'
+        
+        // Variar tamaños y formas
+        const size = Math.random() > 0.7 ? 10 : Math.random() > 0.5 ? 8 : 6
+        confetti.style.width = size + 'px'
+        confetti.style.height = size + 'px'
+        
+        // Variar formas
+        if (i % 3 === 0) {
+          confetti.style.borderRadius = '0' // Cuadrado
+        } else if (i % 5 === 0) {
+          confetti.style.borderRadius = '2px' // Cuadrado redondeado
+        } else {
+          confetti.style.borderRadius = '50%' // Círculo
+        }
+        
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
-        confetti.style.borderRadius = '50%'
         confetti.style.animationDelay = Math.random() * 2 + 's'
-        confetti.style.animationDuration = Math.random() * 2 + 1 + 's'
-        
-        // Posición inicial aleatoria alrededor del botón
-        const angle = (Math.PI * 2 * i) / 30
-        const distance = 20 + Math.random() * 30
-        const startX = Math.cos(angle) * distance
-        const startY = Math.sin(angle) * distance
-        
-        // Posición final aleatoria para el confeti
-        const endDistance = 40 + Math.random() * 60
-        const endAngle = angle + (Math.random() - 0.5) * Math.PI
-        const endX = Math.cos(endAngle) * endDistance
-        const endY = Math.sin(endAngle) * endDistance
-        
-        confetti.style.setProperty('--end-x', endX + 'px')
-        confetti.style.setProperty('--end-y', endY + 'px')
-        confetti.style.transform = `translate(${startX}px, ${startY}px)`
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's'
         
         confettiContainer.appendChild(confetti)
         
@@ -134,8 +129,8 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
           if (confetti.parentNode) {
             confetti.parentNode.removeChild(confetti)
           }
-        }, 3000)
-      }, i * 50)
+        }, 5000)
+      }, i * 100)
     }
     
     // Remover el contenedor después de un tiempo
@@ -143,7 +138,15 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
       if (confettiContainer.parentNode) {
         confettiContainer.parentNode.removeChild(confettiContainer)
       }
-    }, 4000)
+    }, 6000)
+  }
+  
+  // Función para detener confeti abruptamente
+  function stopConfetti() {
+    const confettiContainer = document.querySelector(`[data-task-confetti="${task.id}"]`)
+    if (confettiContainer) {
+      confettiContainer.remove()
+    }
   }
   
   // Función para mostrar el modal de confirmación
