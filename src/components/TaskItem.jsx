@@ -75,29 +75,75 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
     }
   }
   
-  // Función para mostrar confeti
+  // Función para mostrar confeti alrededor del botón
   function showConfetti() {
     const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
+    const button = document.querySelector(`[data-task-id="${task.id}"] .status-btn`)
     
-    for (let i = 0; i < 50; i++) {
+    if (!button) return
+    
+    const buttonRect = button.getBoundingClientRect()
+    const buttonCenterX = buttonRect.left + buttonRect.width / 2
+    const buttonCenterY = buttonRect.top + buttonRect.height / 2
+    
+    // Crear contenedor de confeti relativo al botón
+    const confettiContainer = document.createElement('div')
+    confettiContainer.className = 'confetti-container'
+    confettiContainer.style.position = 'absolute'
+    confettiContainer.style.left = buttonCenterX + 'px'
+    confettiContainer.style.top = buttonCenterY + 'px'
+    confettiContainer.style.pointerEvents = 'none'
+    confettiContainer.style.zIndex = '1000'
+    
+    document.body.appendChild(confettiContainer)
+    
+    for (let i = 0; i < 30; i++) {
       setTimeout(() => {
         const confetti = document.createElement('div')
         confetti.className = 'confetti'
-        confetti.style.left = Math.random() * 100 + 'vw'
+        confetti.style.position = 'absolute'
+        confetti.style.left = '0px'
+        confetti.style.top = '0px'
+        confetti.style.width = '8px'
+        confetti.style.height = '8px'
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
-        confetti.style.animationDelay = Math.random() * 3 + 's'
-        confetti.style.animationDuration = Math.random() * 3 + 2 + 's'
+        confetti.style.borderRadius = '50%'
+        confetti.style.animationDelay = Math.random() * 2 + 's'
+        confetti.style.animationDuration = Math.random() * 2 + 1 + 's'
         
-        document.body.appendChild(confetti)
+        // Posición inicial aleatoria alrededor del botón
+        const angle = (Math.PI * 2 * i) / 30
+        const distance = 20 + Math.random() * 30
+        const startX = Math.cos(angle) * distance
+        const startY = Math.sin(angle) * distance
+        
+        // Posición final aleatoria para el confeti
+        const endDistance = 40 + Math.random() * 60
+        const endAngle = angle + (Math.random() - 0.5) * Math.PI
+        const endX = Math.cos(endAngle) * endDistance
+        const endY = Math.sin(endAngle) * endDistance
+        
+        confetti.style.setProperty('--end-x', endX + 'px')
+        confetti.style.setProperty('--end-y', endY + 'px')
+        confetti.style.transform = `translate(${startX}px, ${startY}px)`
+        
+        confettiContainer.appendChild(confetti)
         
         // Remover confeti después de la animación
         setTimeout(() => {
           if (confetti.parentNode) {
             confetti.parentNode.removeChild(confetti)
           }
-        }, 5000)
-      }, i * 100)
+        }, 3000)
+      }, i * 50)
     }
+    
+    // Remover el contenedor después de un tiempo
+    setTimeout(() => {
+      if (confettiContainer.parentNode) {
+        confettiContainer.parentNode.removeChild(confettiContainer)
+      }
+    }, 4000)
   }
   
   // Función para mostrar el modal de confirmación

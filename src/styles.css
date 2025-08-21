@@ -2238,25 +2238,33 @@ button[type="button"]:hover {
   outline-offset: 2px;
 }
 
-/* ===== EFECTO CONFETI ===== */
-.confetti {
-  position: fixed;
-  top: -10px;
-  width: 10px;
-  height: 10px;
-  background: #f00;
-  animation: confettiFall 5s linear forwards;
-  z-index: 9999;
-  border-radius: 2px;
+/* ===== EFECTO CONFETI ALREDEDOR DEL BOTÓN ===== */
+.confetti-container {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
 }
 
-@keyframes confettiFall {
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #f00;
+  border-radius: 50%;
+  animation: confettiExplode 3s ease-out forwards;
+  z-index: 1000;
+}
+
+@keyframes confettiExplode {
   0% {
-    transform: translateY(-10px) rotate(0deg);
+    transform: translate(0, 0) scale(0);
+    opacity: 1;
+  }
+  50% {
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh) rotate(720deg);
+    transform: translate(var(--end-x, 50px), var(--end-y, -50px)) scale(0);
     opacity: 0;
   }
 }
