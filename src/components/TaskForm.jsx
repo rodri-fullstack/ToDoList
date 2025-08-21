@@ -210,10 +210,11 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
         />
       </div>
       <div className="form-group">
-        <label className="label">Categoría</label>
+        <label className="label" htmlFor="category-select">Categoría</label>
         <select 
+          id="category-select"
           className="input" 
-          value={category} 
+          value={category || 'general'} 
           onChange={(e)=>setCategory(e.target.value)}
         >
           <option value="general">General</option>
@@ -226,7 +227,7 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
         </select>
       </div>
       <div className="form-group">
-        <label className="label">Fecha y hora límite</label>
+        <label className="label" htmlFor="date-time-picker">Fecha y hora límite</label>
         <div className="date-time-container">
           <div className="date-input-group">
             <div className="date-picker-container">
