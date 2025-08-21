@@ -2376,17 +2376,44 @@ select:focus {
   width: 100% !important;
 }
 
-/* Contenedor simple de columnas de tiempo */
+/* Overlay oscuro de fondo */
+.time-picker-floating::before {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  z-index: -1 !important;
+}
+
+/* Time picker flotante con sombra oscura */
+.time-picker-floating {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 1000 !important;
+  background: rgba(0, 0, 0, 0.95) !important;
+  padding: 30px !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Contenedor de columnas de tiempo */
 .time-picker-wheels {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 16px !important;
-  margin: 20px 0 !important;
-  width: 100% !important;
-  background: #f5f5f7 !important;
-  padding: 20px !important;
-  border-radius: 12px !important;
+  gap: 20px !important;
+  width: auto !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .time-wheel-container {
@@ -2409,12 +2436,13 @@ select:focus {
   width: 80px !important;
   height: 200px !important;
   overflow: hidden !important;
-  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(5px) !important;
 }
 
-/* Línea central de selección simple */
+/* Línea central de selección sobre fondo oscuro */
 .time-wheel::before {
   content: '' !important;
   position: absolute !important;
@@ -2422,11 +2450,12 @@ select:focus {
   left: 0 !important;
   right: 0 !important;
   height: 40px !important;
-  background: rgba(0, 0, 0, 0.1) !important;
+  background: rgba(59, 130, 246, 0.3) !important;
   transform: translateY(-50%) !important;
   pointer-events: none !important;
   z-index: 2 !important;
   border-radius: 6px !important;
+  border: 1px solid rgba(59, 130, 246, 0.5) !important;
 }
 
 .wheel-items {
@@ -2447,7 +2476,7 @@ select:focus {
   height: 40px !important;
   font-size: 18px !important;
   font-weight: 500 !important;
-  color: #374151 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
   user-select: none !important;
@@ -2457,23 +2486,25 @@ select:focus {
 }
 
 .wheel-item:hover {
-  background: #f3f4f6 !important;
-  color: #1f2937 !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
 }
 
 .wheel-item.selected {
-  background: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.8) !important;
   color: white !important;
   font-weight: 600 !important;
   font-size: 20px !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5) !important;
 }
 
 .time-separator {
   font-size: 24px !important;
   font-weight: 600 !important;
-  color: #6b7280 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   margin-top: 40px !important;
   user-select: none !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Botón simple para mostrar la hora */
@@ -2717,7 +2748,7 @@ select:focus {
   border-color: #4b5563 !important;
 }
 
-/* ===== EFECTO CONFETI POR TODA LA PANTALLA ===== */
+/* ===== EFECTO CONFETI POR TODA LA PANTALLA ===== */si
 .confetti-container {
   position: fixed;
   top: 0;

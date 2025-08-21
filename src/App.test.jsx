@@ -554,7 +554,7 @@ describe('Gestor de Tareas - App Principal', () => {
     })
 
     it('debe mostrar el campo de búsqueda', () => {
-      render(<App />)
+    render(<App />)
       
       const searchInput = screen.getByPlaceholderText('Buscar por título o descripción')
       expect(searchInput).toBeInTheDocument()
@@ -572,7 +572,7 @@ describe('Gestor de Tareas - App Principal', () => {
         return null
       })
       
-      render(<App />)
+    render(<App />)
       
       // Verificar que ambas tareas están visibles
       expect(screen.getByText('Tarea de trabajo')).toBeInTheDocument()
