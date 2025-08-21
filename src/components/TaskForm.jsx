@@ -310,20 +310,40 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
                       </div>
                     </div>
                     <div className="custom-time">
-                      <div className="time-stepper" role="group" aria-label="Ajustar hora">
-                        <div className="step-group">
-                          <button type="button" className="step-btn" onClick={decHour} aria-label="Disminuir hora">−</button>
-                          <div className="time-display-box" aria-live="polite">{parseTime(dueTime).h.toString().padStart(2,'0')}</div>
-                          <button type="button" className="step-btn" onClick={incHour} aria-label="Aumentar hora">+</button>
+                      <div className="time-scroll-container">
+                        <div className="time-scroll-section">
+                          <h5>Hora</h5>
+                          <div className="time-scroll" role="group" aria-label="Seleccionar hora">
+                            {Array.from({length: 24}, (_, i) => (
+                              <button 
+                                key={i} 
+                                type="button" 
+                                className={`time-scroll-item ${parseTime(dueTime).h === i ? 'selected' : ''}`}
+                                onClick={() => setDueTime(formatTime({ h: i, m: parseTime(dueTime).m }))}
+                                aria-label={`Hora ${i}`}
+                              >
+                                {i.toString().padStart(2, '0')}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                        <div className="step-sep">:</div>
-                        <div className="step-group">
-                          <button type="button" className="step-btn" onClick={decMinute} aria-label="Disminuir minutos">−</button>
-                          <div className="time-display-box" aria-live="polite">{parseTime(dueTime).m.toString().padStart(2,'0')}</div>
-                          <button type="button" className="step-btn" onClick={incMinute} aria-label="Aumentar minutos">+</button>
+                        <div className="time-scroll-section">
+                          <h5>Minutos</h5>
+                          <div className="time-scroll" role="group" aria-label="Seleccionar minutos">
+                            {Array.from({length: 60}, (_, i) => i % 5 === 0).map((_, i) => i * 5).map(minute => (
+                              <button 
+                                key={minute} 
+                                type="button" 
+                                className={`time-scroll-item ${parseTime(dueTime).m === minute ? 'selected' : ''}`}
+                                onClick={() => setDueTime(formatTime({ h: parseTime(dueTime).h, m: minute }))}
+                                aria-label={`Minuto ${minute}`}
+                              >
+                                {minute.toString().padStart(2, '0')}
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
-
                     </div>
 
                     <div className="picker-actions">
