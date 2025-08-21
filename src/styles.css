@@ -104,11 +104,104 @@ body{
   font-size: 1.1rem;
   transition: all 0.3s ease;
   color: white !important;
+  fill: white !important;
+  stroke: white !important;
+}
+
+/* Forzar color blanco en todos los estados */
+.create-task-btn .create-icon,
+.create-task-btn:hover .create-icon,
+.create-task-btn:active .create-icon,
+.create-task-btn:focus .create-icon {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+}
+
+/* Forzar color blanco con selector más específico */
+button.create-task-btn .create-icon,
+button.create-task-btn:hover .create-icon,
+button.create-task-btn:active .create-icon,
+button.create-task-btn:focus .create-icon {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+}
+
+/* Forzar color blanco con selector universal */
+.create-task-btn * {
+  color: white !important;
+}
+
+.create-task-btn .create-icon {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+}
+
+/* Forzar color blanco con selector más agresivo */
+.create-task-btn .create-icon,
+.create-task-btn span.create-icon,
+.create-task-btn div.create-icon,
+.create-task-btn button .create-icon {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+  background-color: transparent !important;
+}
+
+/* Forzar color blanco en todos los elementos del botón */
+.create-task-btn,
+.create-task-btn *,
+.create-task-btn .create-icon,
+.create-task-btn .create-text {
+  color: white !important;
+}
+
+/* Forzar color blanco con selector más agresivo */
+.create-task-btn .create-icon,
+.create-task-btn span.create-icon,
+.create-task-btn div.create-icon,
+.create-task-btn button .create-icon,
+.create-task-btn .create-text,
+.create-task-btn span.create-text,
+.create-task-btn div.create-text {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+  background-color: transparent !important;
+}
+
+/* Forzar color blanco con selector más agresivo */
+.create-task-btn .create-icon,
+.create-task-btn span.create-icon,
+.create-task-btn div.create-icon,
+.create-task-btn button .create-icon,
+.create-task-btn .create-text,
+.create-task-btn span.create-text,
+.create-task-btn div.create-text {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+  background-color: transparent !important;
+}
+
+/* Forzar color blanco en todos los estados */
+.create-task-btn:hover .create-icon,
+.create-task-btn:hover .create-text,
+.create-task-btn:active .create-icon,
+.create-task-btn:active .create-text,
+.create-task-btn:focus .create-icon,
+.create-task-btn:focus .create-text {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
 }
 
 .create-text {
   font-weight: 600;
   letter-spacing: 0.3px;
+  color: white !important;
 }
 
 .create-task-btn:hover .create-icon {
@@ -1783,6 +1876,8 @@ button[type="button"]:hover {
   border-radius: 0 16px 16px 0;
   min-width: 120px;
   justify-content: center;
+  pointer-events: auto !important;
+  z-index: 10;
 }
 
 /* Botón toggle principal */
@@ -1931,7 +2026,7 @@ button[type="button"]:hover {
   padding: 8px 12px;
   border: none;
   border-radius: 10px;
-  cursor: pointer;
+  cursor: pointer !important;
   font-weight: 600;
   font-size: 0.8rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1943,6 +2038,11 @@ button[type="button"]:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   min-height: 36px;
   width: 100%;
+  pointer-events: auto !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Botón editar */
@@ -1967,6 +2067,12 @@ button[type="button"]:hover {
   border-color: #ef4444;
   color: #991b1b;
   box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2);
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .action-btn.delete-btn:hover {
