@@ -100,108 +100,92 @@ body{
   transition: all 0.1s ease;
 }
 
+/* SUPER FORZAR COLOR BLANCO DEL ICONO + */
 .create-icon {
   font-size: 1.1rem;
   transition: all 0.3s ease;
   color: white !important;
-  fill: white !important;
-  stroke: white !important;
+  -webkit-text-fill-color: white !important;
+  text-shadow: none !important;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(321deg) brightness(108%) contrast(108%) !important;
 }
 
-/* Forzar color blanco en todos los estados */
+/* Forzar en todos los posibles selectores */
 .create-task-btn .create-icon,
-.create-task-btn:hover .create-icon,
-.create-task-btn:active .create-icon,
-.create-task-btn:focus .create-icon {
-  color: white !important;
-  fill: white !important;
-  stroke: white !important;
-}
-
-/* Forzar color blanco con selector más específico */
+.create-task-btn span.create-icon,
 button.create-task-btn .create-icon,
-button.create-task-btn:hover .create-icon,
-button.create-task-btn:active .create-icon,
-button.create-task-btn:focus .create-icon {
+button.create-task-btn span.create-icon,
+.toolbar .create-task-btn .create-icon,
+.toolbar button.create-task-btn span.create-icon {
   color: white !important;
-  fill: white !important;
-  stroke: white !important;
+  -webkit-text-fill-color: white !important;
+  text-shadow: none !important;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(321deg) brightness(108%) contrast(108%) !important;
 }
 
-/* Forzar color blanco con selector universal */
-.create-task-btn * {
-  color: white !important;
-}
-
-.create-task-btn .create-icon {
-  color: white !important;
-  fill: white !important;
-  stroke: white !important;
-}
-
-/* Forzar color blanco con selector más agresivo */
-.create-task-btn .create-icon,
-.create-task-btn span.create-icon,
-.create-task-btn div.create-icon,
-.create-task-btn button .create-icon {
-  color: white !important;
-  fill: white !important;
-  stroke: white !important;
-  background-color: transparent !important;
-}
-
-/* Forzar color blanco en todos los elementos del botón */
-.create-task-btn,
-.create-task-btn *,
-.create-task-btn .create-icon,
-.create-task-btn .create-text {
-  color: white !important;
-}
-
-/* Forzar color blanco con selector más agresivo */
-.create-task-btn .create-icon,
-.create-task-btn span.create-icon,
-.create-task-btn div.create-icon,
-.create-task-btn button .create-icon,
-.create-task-btn .create-text,
-.create-task-btn span.create-text,
-.create-task-btn div.create-text {
-  color: white !important;
-  fill: white !important;
-  stroke: white !important;
-  background-color: transparent !important;
-}
-
-/* Forzar color blanco con selector más agresivo */
-.create-task-btn .create-icon,
-.create-task-btn span.create-icon,
-.create-task-btn div.create-icon,
-.create-task-btn button .create-icon,
-.create-task-btn .create-text,
-.create-task-btn span.create-text,
-.create-task-btn div.create-text {
-  color: white !important;
-  fill: white !important;
-  stroke: white !important;
-  background-color: transparent !important;
-}
-
-/* Forzar color blanco en todos los estados */
+/* Forzar en todos los estados */
 .create-task-btn:hover .create-icon,
-.create-task-btn:hover .create-text,
 .create-task-btn:active .create-icon,
-.create-task-btn:active .create-text,
 .create-task-btn:focus .create-icon,
-.create-task-btn:focus .create-text {
+.create-task-btn:visited .create-icon {
   color: white !important;
-  fill: white !important;
-  stroke: white !important;
+  -webkit-text-fill-color: white !important;
+  text-shadow: none !important;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(321deg) brightness(108%) contrast(108%) !important;
 }
 
 .create-text {
   font-weight: 600;
   letter-spacing: 0.3px;
   color: white !important;
+  -webkit-text-fill-color: white !important;
+}
+
+/* ENFOQUE ALTERNATIVO: Usar CSS variables para el color */
+.create-task-btn {
+  --icon-color: white;
+  --text-color: white;
+}
+
+/* Aplicar las variables con !important */
+.create-task-btn .create-icon {
+  color: var(--icon-color) !important;
+  -webkit-text-fill-color: var(--icon-color) !important;
+}
+
+.create-task-btn .create-text {
+  color: var(--text-color) !important;
+  -webkit-text-fill-color: var(--text-color) !important;
+}
+
+/* ENFOQUE SUPER AGRESIVO: Selectores de atributo */
+button[class*="create-task-btn"] span[class*="create-icon"] {
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* ENFOQUE NUCLEAR: Forzar con pseudo-elemento */
+.create-task-btn .create-icon::before {
+  content: "➕";
+  color: white !important;
+  position: absolute;
+  -webkit-text-fill-color: white !important;
+}
+
+.create-task-btn .create-icon {
+  position: relative;
+  color: transparent !important;
+}
+
+.create-task-btn .create-icon::after {
+  content: "➕";
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white !important;
+  -webkit-text-fill-color: white !important;
 }
 
 .create-task-btn:hover .create-icon {
