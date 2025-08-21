@@ -132,16 +132,17 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <div className="toggle-container">
+      {/* Botón de estado a la izquierda */}
+      <div className="status-toggle">
         <button 
-          className={`toggle-btn ${task.completed ? 'completed' : 'pending'}`}
+          className={`status-btn ${task.completed ? 'completed' : 'pending'}`}
           onClick={handleToggle}
           onMouseDown={() => setIsPressed(true)}
           onMouseUp={() => setIsPressed(false)}
           onMouseLeave={() => setIsPressed(false)}
           aria-label={task.completed ? "Marcar como pendiente" : "Marcar como completada"}
         >
-          <div className="toggle-icon">
+          <div className="status-icon">
             {task.completed ? (
               <>
                 <span className="checkmark">✓</span>
@@ -151,20 +152,18 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
               <span className="circle">○</span>
             )}
           </div>
-          <div className="toggle-label">
-            {task.completed ? 'Completada' : 'Pendiente'}
-          </div>
         </button>
       </div>
       
-      <div className="task-content">
+      {/* Tarjeta de información en el centro */}
+      <div className="task-card">
         <div className="task-header">
-          <h3 className={task.completed ? 'line' : ''}>{task.title}</h3>
+          <h3 className={`task-title ${task.completed ? 'line' : ''}`}>{task.title}</h3>
           <span className={`category-badge category-${task.category || 'general'}`}>
             {task.category ? task.category.charAt(0).toUpperCase() + task.category.slice(1) : 'General'}
           </span>
         </div>
-        {task.description && <p className="description">{task.description}</p>}
+        {task.description && <p className="task-description">{task.description}</p>}
         {task.dueDate && (
           <p className={`due-date ${overdue && !task.completed ? 'overdue' : ''}`}>
             <span className="due-icon">📅</span>
@@ -179,6 +178,7 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
         )}
       </div>
       
+      {/* Botones de acción a la derecha */}
       <div className="task-actions">
         <button 
           className="action-btn edit-btn" 

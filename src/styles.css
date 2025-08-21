@@ -741,13 +741,13 @@ button[type="button"]:hover {
   }
   
   /* Mejorar experiencia táctil general */
-  .btn, .tab, .toggle-btn, .action-btn, .month-nav {
+  .btn, .tab, .status-btn, .action-btn, .month-nav {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
   
   /* Mejorar hover en dispositivos táctiles */
-  .btn:active, .tab:active, .toggle-btn:active, .action-btn:active {
+  .btn:active, .tab:active, .status-btn:active, .action-btn:active {
     transform: scale(0.98);
   }
   
@@ -1382,31 +1382,46 @@ button[type="button"]:hover {
   .item {
     width: 100%;
     box-sizing: border-box;
-    padding: 16px;
     margin-bottom: 12px;
+    flex-direction: column;
+    min-height: auto;
   }
   
-  .toggle-container {
+  .status-toggle {
     width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #e2e8f0;
+    border-radius: 16px 16px 0 0;
+    padding: 12px;
+    min-width: auto;
   }
   
-  .toggle-btn {
+  .status-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .task-card {
+    padding: 16px;
     width: 100%;
-    justify-content: space-between;
-    padding: 14px 16px;
-    min-height: 52px;
+    box-sizing: border-box;
   }
   
   .task-actions {
     width: 100%;
-    margin-top: 12px;
-    gap: 8px;
+    border-left: none;
+    border-top: 2px solid #e2e8f0;
+    border-radius: 0 0 16px 16px;
+    min-width: auto;
+    flex-direction: row;
+    padding: 12px;
   }
   
   .action-btn {
     flex: 1;
     min-height: 44px;
     padding: 12px 16px;
+    width: auto;
   }
 }
 
@@ -1420,20 +1435,27 @@ button[type="button"]:hover {
   }
   
   .item {
-    padding: 14px;
     margin-bottom: 10px;
     border-radius: 12px;
   }
   
-  .toggle-btn {
-    padding: 12px 14px;
-    min-height: 48px;
-    font-size: 0.9rem;
+  .status-toggle {
+    padding: 10px;
+  }
+  
+  .status-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .task-card {
+    padding: 14px;
   }
   
   .task-actions {
     flex-direction: column;
     gap: 6px;
+    padding: 10px;
   }
   
   .action-btn {
@@ -1482,15 +1504,26 @@ button[type="button"]:hover {
   }
   
   .item {
-    padding: 12px;
     margin-bottom: 8px;
     border-radius: 10px;
   }
   
-  .toggle-btn {
-    padding: 10px 12px;
-    min-height: 44px;
-    font-size: 0.85rem;
+  .status-toggle {
+    padding: 8px;
+  }
+  
+  .status-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .task-card {
+    padding: 12px;
+  }
+  
+  .task-actions {
+    padding: 8px;
+    gap: 4px;
   }
   
   .action-btn {
@@ -1536,11 +1569,149 @@ button[type="button"]:hover {
 
 /* ===== BOTONES DE TAREAS SUPER INTERACTIVOS ===== */
 
-/* Contenedor del botón toggle */
-.toggle-container {
+/* ===== BOTÓN DE ESTADO A LA IZQUIERDA ===== */
+.status-toggle {
   position: relative;
   display: flex;
   align-items: center;
+  padding: 16px;
+  border-right: 2px solid #e2e8f0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 16px 0 0 16px;
+  min-width: 80px;
+  justify-content: center;
+}
+
+/* Botón de estado */
+.status-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* Estados del botón de estado */
+.status-btn.pending {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+  color: #92400e;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+}
+
+.status-btn.completed {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border: 2px solid #10b981;
+  color: #065f46;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+/* Hover effects */
+.status-btn:hover {
+  transform: translateY(-3px) scale(1.1) rotateX(5deg);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.status-btn.pending:hover {
+  background: linear-gradient(135deg, #fde68a 0%, #fbbf24 100%);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+}
+
+.status-btn.completed:hover {
+  background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+/* Active state */
+.status-btn:active {
+  transform: translateY(-1px) scale(0.95);
+  transition: all 0.1s ease;
+}
+
+/* Icono del estado */
+.status-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+/* Círculo pendiente */
+.status-btn.pending .circle {
+  color: #f59e0b;
+  font-size: 1.4rem;
+  animation: pulsePending 2s infinite;
+}
+
+/* Checkmark completado */
+.status-btn.completed .checkmark {
+  color: #10b981;
+  font-size: 1.4rem;
+  font-weight: bold;
+  animation: checkmarkBounce 0.6s ease-out;
+}
+
+/* ===== TARJETA DE INFORMACIÓN EN EL CENTRO ===== */
+.task-card {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.task-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0f172a;
+  flex: 1;
+  min-width: 0;
+}
+
+.task-title.line {
+  text-decoration: line-through;
+  color: #64748b;
+}
+
+.task-description {
+  margin: 0;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ===== BOTONES DE ACCIÓN A LA DERECHA ===== */
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-left: 2px solid #e2e8f0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 0 16px 16px 0;
+  min-width: 120px;
+  justify-content: center;
 }
 
 /* Botón toggle principal */
@@ -1684,13 +1855,14 @@ button[type="button"]:hover {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   transform-style: preserve-3d;
@@ -1698,6 +1870,8 @@ button[type="button"]:hover {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   border: 2px solid #e2e8f0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  min-height: 36px;
+  width: 100%;
 }
 
 /* Botón editar */
@@ -1811,18 +1985,18 @@ button[type="button"]:hover {
   transition: left 0.6s ease;
 }
 
-.toggle-btn:hover::before,
+.status-btn:hover::before,
 .action-btn:hover::before {
   left: 100%;
 }
 
 /* Efecto de sombra dinámica */
-.toggle-btn,
+.status-btn,
 .action-btn {
   position: relative;
 }
 
-.toggle-btn::after,
+.status-btn::after,
 .action-btn::after {
   content: '';
   position: absolute;
@@ -1838,7 +2012,7 @@ button[type="button"]:hover {
   opacity: 0;
 }
 
-.toggle-btn:hover::after,
+.status-btn:hover::after,
 .action-btn:hover::after {
   opacity: 1;
   transform: translateX(-50%) scale(1.2);
@@ -1846,10 +2020,9 @@ button[type="button"]:hover {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .toggle-btn {
-    padding: 10px 12px;
-    gap: 8px;
-    font-size: 0.8rem;
+  .status-btn {
+    width: 40px;
+    height: 40px;
   }
   
   .action-btn {
@@ -1858,7 +2031,7 @@ button[type="button"]:hover {
     font-size: 0.8rem;
   }
   
-  .toggle-icon {
+  .status-icon {
     width: 20px;
     height: 20px;
     font-size: 1rem;
@@ -1886,13 +2059,13 @@ button[type="button"]:hover {
 }
 
 /* ===== ESTADOS DE FOCUS ===== */
-.toggle-btn:focus,
+.status-btn:focus,
 .action-btn:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
-.toggle-btn:focus-visible,
+.status-btn:focus-visible,
 .action-btn:focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
@@ -1933,12 +2106,15 @@ button[type="button"]:hover {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 2px solid #e2e8f0;
   border-radius: 16px;
-  padding: 20px;
+  padding: 0;
   margin-bottom: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
   perspective: 1000px;
+  display: flex;
+  align-items: stretch;
+  min-height: 80px;
 }
 
 .item:hover {
