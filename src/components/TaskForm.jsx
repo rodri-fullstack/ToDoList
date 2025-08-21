@@ -7,9 +7,11 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
   const [dueDate, setDueDate] = useState(defaultValues?.dueDate ? formatDateForInput(defaultValues.dueDate) : '')
   const [dueTime, setDueTime] = useState(defaultValues?.dueTime ?? '')
   const [showCalendar, setShowCalendar] = useState(false)
+  const [showTimePicker, setShowTimePicker] = useState(false)
   const [selectedDate, setSelectedDate] = useState(defaultValues?.dueDate ? new Date(defaultValues.dueDate) : null)
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const calendarRef = useRef(null)
+  const timePickerRef = useRef(null)
 
   // Función para convertir fecha ISO a formato yyyy-mm-dd para el input date
   function formatDateForInput(isoDate) {
@@ -163,6 +165,9 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setShowCalendar(false)
       }
+      if (timePickerRef.current && !timePickerRef.current.contains(event.target)) {
+        setShowTimePicker(false)
+      }
     }
 
     document.addEventListener('mousedown', handleClickOutside)
@@ -174,6 +179,7 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
     function handleEsc(event){
       if(event.key === 'Escape'){
         setShowCalendar(false)
+        setShowTimePicker(false)
       }
     }
     document.addEventListener('keydown', handleEsc)
@@ -310,45 +316,72 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
                       </div>
                     </div>
                     <div className="custom-time">
-                      <div className="time-scroll-container">
-                        <div className="time-scroll-section">
-                          <h5>Hora</h5>
-                          <div className="time-scroll" role="group" aria-label="Seleccionar hora">
-                            {Array.from({length: 24}, (_, i) => (
-                              <button 
-                                key={i} 
-                                type="button" 
-                                className={`time-scroll-item ${parseTime(dueTime).h === i ? 'selected' : ''}`}
-                                onClick={() => setDueTime(formatTime({ h: i, m: parseTime(dueTime).m }))}
-                                aria-label={`Hora ${i}`}
-                              >
-                                {i.toString().padStart(2, '0')}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="time-scroll-section">
-                          <h5>Minutos</h5>
-                          <div className="time-scroll" role="group" aria-label="Seleccionar minutos">
-                            {Array.from({length: 60}, (_, i) => i % 5 === 0).map((_, i) => i * 5).map(minute => (
-                              <button 
-                                key={minute} 
-                                type="button" 
-                                className={`time-scroll-item ${parseTime(dueTime).m === minute ? 'selected' : ''}`}
-                                onClick={() => setDueTime(formatTime({ h: parseTime(dueTime).h, m: minute }))}
-                                aria-label={`Minuto ${minute}`}
-                              >
-                                {minute.toString().padStart(2, '0')}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+                      <button 
+                        type="button" 
+                        className="time-adjust-btn"
+                        onClick={() => setShowTimePicker(true)}
+                        aria-label="Ajustar hora personalizada"
+                      >
+                        <span className="time-adjust-icon">⏰</span>
+                        <span className="time-adjust-text">Ajustar hora personalizada</span>
+                      </button>
                     </div>
 
                     <div className="picker-actions">
                       <button type="button" className="btn cancel-btn" onClick={() => setShowCalendar(false)}>Cancelar</button>
                       <button type="button" className="btn primary confirm-btn" onClick={() => setShowCalendar(false)}>Listo</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Ventana modal del time picker */}
+              {showTimePicker && (
+                <div className="picker-overlay" onClick={() => setShowTimePicker(false)}>
+                  <div className="picker-modal time-picker-modal" ref={timePickerRef} onClick={(e)=>e.stopPropagation()}>
+                    <div className="time-picker-header">
+                      <h4>Ajustar Hora Personalizada</h4>
+                      <p className="time-helper">Selecciona la hora y minutos exactos</p>
+                    </div>
+                    
+                    <div className="time-scroll-container">
+                      <div className="time-scroll-section">
+                        <h5>Hora</h5>
+                        <div className="time-scroll" role="group" aria-label="Seleccionar hora">
+                          {Array.from({length: 24}, (_, i) => (
+                            <button 
+                              key={i} 
+                              type="button" 
+                              className={`time-scroll-item ${parseTime(dueTime).h === i ? 'selected' : ''}`}
+                              onClick={() => setDueTime(formatTime({ h: i, m: parseTime(dueTime).m }))}
+                              aria-label={`Hora ${i}`}
+                            >
+                              {i.toString().padStart(2, '0')}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="time-scroll-section">
+                        <h5>Minutos</h5>
+                        <div className="time-scroll" role="group" aria-label="Seleccionar minutos">
+                          {Array.from({length: 60}, (_, i) => i % 5 === 0).map((_, i) => i * 5).map(minute => (
+                            <button 
+                              key={minute} 
+                              type="button" 
+                              className={`time-scroll-item ${parseTime(dueTime).m === minute ? 'selected' : ''}`}
+                              onClick={() => setDueTime(formatTime({ h: parseTime(dueTime).h, m: minute }))}
+                              aria-label={`Minuto ${minute}`}
+                            >
+                              {minute.toString().padStart(2, '0')}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="picker-actions">
+                      <button type="button" className="btn cancel-btn" onClick={() => setShowTimePicker(false)}>Cancelar</button>
+                      <button type="button" className="btn primary confirm-btn" onClick={() => setShowTimePicker(false)}>Listo</button>
                     </div>
                   </div>
                 </div>
