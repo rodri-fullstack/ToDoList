@@ -152,6 +152,9 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
               <span className="circle">○</span>
             )}
           </div>
+          <span className="status-text">
+            {task.completed ? 'Completada' : 'Pendiente'}
+          </span>
         </button>
       </div>
       
