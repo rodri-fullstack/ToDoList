@@ -16,6 +16,52 @@
   font-family: inherit;
   font-size: 1rem;
   font-weight: 500;
+  min-height: 48px; /* Mejora la usabilidad táctil */
+}
+
+/* Responsive para display-btn en móviles */
+@media (max-width: 768px) {
+  .display-btn {
+    padding: 14px 18px;
+    min-height: 52px;
+    font-size: 16px; /* Previene zoom en iOS */
+  }
+  
+  .display-icon {
+    font-size: 1.3rem;
+  }
+  
+  .display-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .display-btn {
+    padding: 16px 20px;
+    min-height: 56px;
+    gap: 12px;
+  }
+  
+  .display-icon {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .display-btn {
+    padding: 14px 18px;
+    min-height: 52px;
+    gap: 10px;
+  }
+  
+  .display-icon {
+    font-size: 1.3rem;
+  }
+  
+  .display-text {
+    font-size: 0.9rem;
+  }
 }
 
 .display-btn:hover,
@@ -86,9 +132,41 @@
   padding: 6px 10px;
   cursor: pointer;
   font-weight: 700;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .month-nav:hover { background: #e0e7ff; }
+
+/* Responsive para navegación del calendario en móviles */
+@media (max-width: 768px) {
+  .month-nav {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+  }
+  
+  .current-month {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .month-nav {
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
+  
+  .current-month {
+    font-size: 1rem;
+  }
+}
 
 .calendar-weekdays {
   display: grid;
@@ -119,7 +197,53 @@
 .calendar-day.past { opacity: 0.4; cursor: not-allowed; }
 .calendar-day:hover:not(.past):not(.selected) { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 
-.picker-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.picker-actions { 
+  display: flex; 
+  justify-content: flex-end; 
+  gap: 8px; 
+  margin-top: 12px; 
+}
+
+/* Responsive para acciones del picker en móviles */
+@media (max-width: 768px) {
+  .picker-actions {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  
+  .picker-actions .btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .picker-actions {
+    gap: 10px;
+    margin-top: 14px;
+  }
+  
+  .picker-actions .btn {
+    padding: 16px 24px;
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 360px) {
+  .picker-actions {
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  .picker-actions .btn {
+    padding: 14px 20px;
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
+}
 
 .time-picker-header h4 { margin: 4px 0 12px 0; }
 .time-picker-header .time-helper{ margin: 0 0 12px 0; color:#64748b; font-size:.9rem; }
@@ -146,6 +270,144 @@
 @media (max-width: 420px) {
   .picker-modal { padding: 12px; }
   .calendar-day { height: 36px; }
+}
+
+/* Responsive para pickers en móviles */
+@media (max-width: 768px) {
+  .picker-overlay {
+    padding: 12px;
+  }
+  
+  .picker-modal {
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+  }
+  
+  .calendar-modal {
+    max-width: 100%;
+  }
+  
+  .calendar-day {
+    height: 44px;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+  
+  .calendar-weekdays {
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+  
+  .quick-time-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  .quick-time-btn {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .time-stepper {
+    gap: 12px;
+  }
+  
+  .step-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+  
+  .time-display-box {
+    min-width: 44px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .picker-overlay {
+    padding: 8px;
+  }
+  
+  .picker-modal {
+    padding: 16px;
+    border-radius: 16px;
+  }
+  
+  .calendar-day {
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  .quick-time-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  
+  .quick-time-btn {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .step-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+  
+  .time-display-box {
+    min-width: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .picker-overlay {
+    padding: 4px;
+  }
+  
+  .picker-modal {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  
+  .calendar-day {
+    height: 36px;
+    font-size: 0.85rem;
+  }
+  
+  .quick-time-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  
+  .quick-time-btn {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .step-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+  }
+  
+  .time-display-box {
+    min-width: 36px;
+    font-size: 0.9rem;
+  }
+  
+  .month-nav {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+  }
+  
+  .current-month {
+    font-size: 0.9rem;
+  }
 }
 
 
