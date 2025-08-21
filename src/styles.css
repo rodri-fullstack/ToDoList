@@ -2381,9 +2381,13 @@ select:focus {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 16px !important;
-  margin: 24px 0 !important;
+  gap: 20px !important;
+  margin: 32px 0 !important;
   width: 100% !important;
+  background: #f8fafc !important;
+  padding: 24px !important;
+  border-radius: 20px !important;
+  border: 1px solid #e2e8f0 !important;
 }
 
 .time-wheel-container {
@@ -2403,21 +2407,50 @@ select:focus {
 
 .time-wheel {
   position: relative !important;
-  width: 80px !important;
-  height: 200px !important;
+  width: 90px !important;
+  height: 220px !important;
   overflow: hidden !important;
-  background: #f8fafc !important;
-  border: 2px solid #e2e8f0 !important;
-  border-radius: 16px !important;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%) !important;
+  border: 2px solid #d1d5db !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    inset 0 2px 8px rgba(0, 0, 0, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  position: relative !important;
+}
+
+.time-wheel::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 80px !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%) !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+.time-wheel::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 80px !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%) !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
 }
 
 .wheel-items {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 80px 0 !important;
-  transform: translateY(-80px) !important;
+  padding: 100px 0 !important;
+  transform: translateY(-100px) !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 .wheel-item {
@@ -2425,15 +2458,17 @@ select:focus {
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
-  height: 40px !important;
-  font-size: 18px !important;
-  font-weight: 500 !important;
+  height: 44px !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
   color: #6b7280 !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   user-select: none !important;
-  border-radius: 8px !important;
-  margin: 2px 4px !important;
+  border-radius: 12px !important;
+  margin: 3px 6px !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 .wheel-item:hover {
@@ -2442,20 +2477,25 @@ select:focus {
 }
 
 .wheel-item.selected {
-  background: #3b82f6 !important;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
   color: white !important;
-  font-weight: 600 !important;
-  font-size: 20px !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
-  transform: scale(1.1) !important;
+  font-weight: 700 !important;
+  font-size: 22px !important;
+  box-shadow: 
+    0 8px 24px rgba(59, 130, 246, 0.4),
+    0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+  transform: scale(1.15) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
 .time-separator {
-  font-size: 32px !important;
-  font-weight: 700 !important;
+  font-size: 36px !important;
+  font-weight: 800 !important;
   color: #1f2937 !important;
-  margin-top: 40px !important;
+  margin-top: 50px !important;
   user-select: none !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  opacity: 0.8 !important;
 }
 
 /* Botón para mostrar la hora actual */
@@ -2464,31 +2504,37 @@ select:focus {
   align-items: center !important;
   justify-content: space-between !important;
   width: 100% !important;
-  padding: 16px 20px !important;
-  background: #ffffff !important;
-  border: 2px solid #e2e8f0 !important;
-  border-radius: 12px !important;
+  padding: 18px 24px !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 2px solid #d1d5db !important;
+  border-radius: 16px !important;
   color: #1f2937 !important;
   font-size: 18px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  min-height: 56px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-height: 60px !important;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
 .time-display-btn:hover {
-  background: #f8fafc !important;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
   border-color: #3b82f6 !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 
+    0 12px 32px rgba(59, 130, 246, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.1) !important;
 }
 
 .time-display-text {
-  font-size: 24px !important;
-  font-weight: 700 !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
   font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace !important;
   color: #1f2937 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  letter-spacing: 1px !important;
 }
 
 .time-display-icon {
