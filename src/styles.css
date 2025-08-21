@@ -2416,7 +2416,8 @@ select:focus {
   box-shadow: 
     inset 0 2px 8px rgba(0, 0, 0, 0.08),
     0 4px 16px rgba(0, 0, 0, 0.1) !important;
-  position: relative !important;
+  perspective: 1000px !important;
+  transform-style: preserve-3d !important;
 }
 
 .time-wheel::before {
@@ -2426,9 +2427,10 @@ select:focus {
   left: 0 !important;
   right: 0 !important;
   height: 80px !important;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%) !important;
   pointer-events: none !important;
   z-index: 2 !important;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1) !important;
 }
 
 .time-wheel::after {
@@ -2438,9 +2440,32 @@ select:focus {
   left: 0 !important;
   right: 0 !important;
   height: 80px !important;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%) !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%) !important;
   pointer-events: none !important;
   z-index: 2 !important;
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Línea central de selección estilo iPhone */
+.time-wheel::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 44px !important;
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.1) 0%, 
+    rgba(59, 130, 246, 0.2) 20%, 
+    rgba(59, 130, 246, 0.3) 50%, 
+    rgba(59, 130, 246, 0.2) 80%, 
+    rgba(59, 130, 246, 0.1) 100%) !important;
+  border-top: 2px solid rgba(59, 130, 246, 0.4) !important;
+  border-bottom: 2px solid rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  border-radius: 8px !important;
 }
 
 .wheel-items {
@@ -2451,6 +2476,7 @@ select:focus {
   transform: translateY(-100px) !important;
   position: relative !important;
   z-index: 1 !important;
+  transform-style: preserve-3d !important;
 }
 
 .wheel-item {
@@ -2469,12 +2495,27 @@ select:focus {
   margin: 3px 6px !important;
   position: relative !important;
   z-index: 1 !important;
+  transform-style: preserve-3d !important;
+  transform: translateZ(0) !important;
 }
 
 .wheel-item:hover {
   background: #e5e7eb !important;
   color: #374151 !important;
+  transform: translateZ(10px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
+
+/* Efecto de perspectiva 3D para elementos en diferentes posiciones */
+.wheel-item:nth-child(1) { transform: translateZ(0px) scale(0.8); opacity: 0.4; }
+.wheel-item:nth-child(2) { transform: translateZ(5px) scale(0.85); opacity: 0.6; }
+.wheel-item:nth-child(3) { transform: translateZ(15px) scale(0.9); opacity: 0.8; }
+.wheel-item:nth-child(4) { transform: translateZ(25px) scale(0.95); opacity: 0.9; }
+.wheel-item:nth-child(5) { transform: translateZ(35px) scale(1.0); opacity: 1.0; }
+.wheel-item:nth-child(6) { transform: translateZ(25px) scale(0.95); opacity: 0.9; }
+.wheel-item:nth-child(7) { transform: translateZ(15px) scale(0.9); opacity: 0.8; }
+.wheel-item:nth-child(8) { transform: translateZ(5px) scale(0.85); opacity: 0.6; }
+.wheel-item:nth-child(9) { transform: translateZ(0px) scale(0.8); opacity: 0.4; }
 
 .wheel-item.selected {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
@@ -2482,10 +2523,12 @@ select:focus {
   font-weight: 700 !important;
   font-size: 22px !important;
   box-shadow: 
-    0 8px 24px rgba(59, 130, 246, 0.4),
-    0 0 0 2px rgba(59, 130, 246, 0.2) !important;
-  transform: scale(1.15) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    0 12px 32px rgba(59, 130, 246, 0.5),
+    0 0 0 3px rgba(59, 130, 246, 0.3),
+    0 0 20px rgba(59, 130, 246, 0.2) !important;
+  transform: translateZ(50px) scale(1.2) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  z-index: 10 !important;
 }
 
 .time-separator {
