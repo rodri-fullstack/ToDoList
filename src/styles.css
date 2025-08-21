@@ -2376,18 +2376,17 @@ select:focus {
   width: 100% !important;
 }
 
-/* Contenedor de ruedas giratorias estilo iPhone */
+/* Contenedor simple de columnas de tiempo */
 .time-picker-wheels {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 20px !important;
-  margin: 32px 0 !important;
+  gap: 16px !important;
+  margin: 20px 0 !important;
   width: 100% !important;
-  background: #f8fafc !important;
-  padding: 24px !important;
-  border-radius: 20px !important;
-  border: 1px solid #e2e8f0 !important;
+  background: #f5f5f7 !important;
+  padding: 20px !important;
+  border-radius: 12px !important;
 }
 
 .time-wheel-container {
@@ -2407,76 +2406,37 @@ select:focus {
 
 .time-wheel {
   position: relative !important;
-  width: 90px !important;
-  height: 220px !important;
+  width: 80px !important;
+  height: 200px !important;
   overflow: hidden !important;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%) !important;
-  border: 2px solid #d1d5db !important;
-  border-radius: 20px !important;
-  box-shadow: 
-    inset 0 2px 8px rgba(0, 0, 0, 0.08),
-    0 4px 16px rgba(0, 0, 0, 0.1) !important;
-  perspective: 1000px !important;
-  transform-style: preserve-3d !important;
+  background: #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
 }
 
-.time-wheel::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 80px !important;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%) !important;
-  pointer-events: none !important;
-  z-index: 2 !important;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-}
-
-.time-wheel::after {
-  content: '' !important;
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 80px !important;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%) !important;
-  pointer-events: none !important;
-  z-index: 2 !important;
-  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Línea central de selección estilo iPhone */
+/* Línea central de selección simple */
 .time-wheel::before {
   content: '' !important;
   position: absolute !important;
   top: 50% !important;
   left: 0 !important;
   right: 0 !important;
-  height: 44px !important;
-  background: linear-gradient(90deg, 
-    rgba(59, 130, 246, 0.1) 0%, 
-    rgba(59, 130, 246, 0.2) 20%, 
-    rgba(59, 130, 246, 0.3) 50%, 
-    rgba(59, 130, 246, 0.2) 80%, 
-    rgba(59, 130, 246, 0.1) 100%) !important;
-  border-top: 2px solid rgba(59, 130, 246, 0.4) !important;
-  border-bottom: 2px solid rgba(59, 130, 246, 0.4) !important;
+  height: 40px !important;
+  background: rgba(0, 0, 0, 0.1) !important;
   transform: translateY(-50%) !important;
   pointer-events: none !important;
-  z-index: 3 !important;
-  border-radius: 8px !important;
+  z-index: 2 !important;
+  border-radius: 6px !important;
 }
 
 .wheel-items {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  padding: 100px 0 !important;
-  transform: translateY(-100px) !important;
+  padding: 80px 0 !important;
+  transform: translateY(-80px) !important;
   position: relative !important;
   z-index: 1 !important;
-  transform-style: preserve-3d !important;
 }
 
 .wheel-item {
@@ -2484,105 +2444,70 @@ select:focus {
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
-  height: 44px !important;
-  font-size: 20px !important;
-  font-weight: 600 !important;
-  color: #6b7280 !important;
+  height: 40px !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
   cursor: pointer !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.2s ease !important;
   user-select: none !important;
-  border-radius: 12px !important;
-  margin: 3px 6px !important;
+  margin: 2px 4px !important;
   position: relative !important;
   z-index: 1 !important;
-  transform-style: preserve-3d !important;
-  transform: translateZ(0) !important;
 }
 
 .wheel-item:hover {
-  background: #e5e7eb !important;
-  color: #374151 !important;
-  transform: translateZ(10px) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  background: #f3f4f6 !important;
+  color: #1f2937 !important;
 }
 
-/* Efecto de perspectiva 3D para elementos en diferentes posiciones */
-.wheel-item:nth-child(1) { transform: translateZ(0px) scale(0.8); opacity: 0.4; }
-.wheel-item:nth-child(2) { transform: translateZ(5px) scale(0.85); opacity: 0.6; }
-.wheel-item:nth-child(3) { transform: translateZ(15px) scale(0.9); opacity: 0.8; }
-.wheel-item:nth-child(4) { transform: translateZ(25px) scale(0.95); opacity: 0.9; }
-.wheel-item:nth-child(5) { transform: translateZ(35px) scale(1.0); opacity: 1.0; }
-.wheel-item:nth-child(6) { transform: translateZ(25px) scale(0.95); opacity: 0.9; }
-.wheel-item:nth-child(7) { transform: translateZ(15px) scale(0.9); opacity: 0.8; }
-.wheel-item:nth-child(8) { transform: translateZ(5px) scale(0.85); opacity: 0.6; }
-.wheel-item:nth-child(9) { transform: translateZ(0px) scale(0.8); opacity: 0.4; }
-
 .wheel-item.selected {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  background: #3b82f6 !important;
   color: white !important;
-  font-weight: 700 !important;
-  font-size: 22px !important;
-  box-shadow: 
-    0 12px 32px rgba(59, 130, 246, 0.5),
-    0 0 0 3px rgba(59, 130, 246, 0.3),
-    0 0 20px rgba(59, 130, 246, 0.2) !important;
-  transform: translateZ(50px) scale(1.2) !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-  z-index: 10 !important;
+  font-weight: 600 !important;
+  font-size: 20px !important;
 }
 
 .time-separator {
-  font-size: 36px !important;
-  font-weight: 800 !important;
-  color: #1f2937 !important;
-  margin-top: 50px !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  color: #6b7280 !important;
+  margin-top: 40px !important;
   user-select: none !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-  opacity: 0.8 !important;
 }
 
-/* Botón para mostrar la hora actual */
+/* Botón simple para mostrar la hora */
 .time-display-btn {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   width: 100% !important;
-  padding: 18px 24px !important;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
-  border: 2px solid #d1d5db !important;
-  border-radius: 16px !important;
+  padding: 16px 20px !important;
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
   color: #1f2937 !important;
-  font-size: 18px !important;
-  font-weight: 600 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
   cursor: pointer !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  min-height: 60px !important;
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.08),
-    0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease !important;
+  min-height: 48px !important;
 }
 
 .time-display-btn:hover {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
-  border-color: #3b82f6 !important;
-  transform: translateY(-3px) scale(1.02) !important;
-  box-shadow: 
-    0 12px 32px rgba(59, 130, 246, 0.2),
-    0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  background: #f9fafb !important;
+  border-color: #9ca3af !important;
 }
 
 .time-display-text {
-  font-size: 28px !important;
-  font-weight: 800 !important;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
   color: #1f2937 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
-  letter-spacing: 1px !important;
 }
 
 .time-display-icon {
-  font-size: 20px !important;
-  opacity: 0.7 !important;
+  font-size: 18px !important;
+  color: #6b7280 !important;
 }
 
 /* Modal del time picker */
