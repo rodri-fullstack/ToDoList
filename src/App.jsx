@@ -266,32 +266,19 @@ export default function App() {
                   {tasks.length === 0 && filter === 'all' && categoryFilter === 'all' && !query ? (
                     <>
                       <h3>Aún no tienes tareas</h3>
-                      <p>✨ Crea tu primera tarea usando el botón flotante azul</p>
-                      <div className="empty-action">
-                        <button
-                          type="button"
-                          className="empty-cta-btn"
-                          onClick={() => setShowNewTaskModal(true)}
-                          aria-label="Crear tarea"
-                        >
-                          <span className="cta-icon">➕</span>
-                          Crear Tarea
-                        </button>
-                      </div>
+                      <p>✨ Crea tu primera tarea usando el botón "Crear Tarea" en la parte superior</p>
                     </>
                   ) : (
                     <>
                       <h3>No se encontraron tareas</h3>
                       <p>Ajusta los filtros o limpia la búsqueda.</p>
-                      <div className="empty-action">
-                        <button
-                          type="button"
-                          className="btn"
-                          onClick={() => { setFilter('all'); setCategoryFilter('all'); setQuery(''); }}
-                        >
-                          Limpiar filtros
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        className="btn"
+                        onClick={() => { setFilter('all'); setCategoryFilter('all'); setQuery(''); }}
+                      >
+                        Limpiar filtros
+                      </button>
                     </>
                   )}
                 </div>
@@ -305,7 +292,18 @@ export default function App() {
   return (
     <div className="container">
       <header className="toolbar">
-        <h1>Gestor de Tareas</h1>
+        <div className="toolbar-main">
+          <h1>Gestor de Tareas</h1>
+          <button 
+            className="create-task-btn"
+            onClick={() => setShowNewTaskModal(true)}
+            aria-label="Crear nueva tarea"
+            title="Crear nueva tarea"
+          >
+            <span className="create-icon">➕</span>
+            <span className="create-text">Crear Tarea</span>
+          </button>
+        </div>
         <div className="user-switcher">
           <button 
             className="user-display"
@@ -329,13 +327,6 @@ export default function App() {
             </div>
           )}
         </div>
-        
-        {/* Indicador de ayuda para usuarios nuevos */}
-        {showAttention && !(tasks.length === 0 && filter === 'all' && categoryFilter === 'all' && !query) && (
-          <div className="help-indicator">
-            <span className="help-text">💡 Usa el botón flotante azul para crear tareas</span>
-          </div>
-        )}
       </header>
 
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} tabs={tabs} />
@@ -352,19 +343,7 @@ export default function App() {
         )}
       </Modal>
 
-      {/* Botón flotante fusionado para nueva tarea */}
-      <button 
-        className={`floating-add-btn ${showAttention ? 'attention' : ''}`}
-        onClick={() => setShowNewTaskModal(true)}
-        aria-label="Agregar nueva tarea"
-        title="Crear nueva tarea - Haz clic para agregar una nueva tarea a tu lista"
-      >
-        <span className="add-icon">+</span>
-        <span className="add-text">Crear tarea</span>
-        {showAttention && (
-          <span className="new-task-label">¡Crea tu primera tarea aquí!</span>
-        )}
-      </button>
+
 
       {/* Modal para nueva tarea */}
       <Modal open={showNewTaskModal} title="Nueva tarea" onClose={closeNewTaskModal}>
