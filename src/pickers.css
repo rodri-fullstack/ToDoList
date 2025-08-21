@@ -17,6 +17,7 @@
   font-size: 1rem;
   font-weight: 500;
   min-height: 48px; /* Mejora la usabilidad táctil */
+  box-sizing: border-box;
 }
 
 /* Responsive para display-btn en móviles */
@@ -118,6 +119,8 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  width: 100%;
+  gap: 8px;
 }
 
 .current-month {
@@ -179,9 +182,15 @@
   color: #64748b;
   font-size: 0.8rem;
   text-align: center;
+  width: 100%;
 }
 
-.calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.calendar-days { 
+  display: grid; 
+  grid-template-columns: repeat(7, 1fr); 
+  gap: 6px; 
+  width: 100%;
+}
 
 .calendar-day {
   border: 1px solid #e2e8f0;
@@ -251,23 +260,43 @@
 .time-picker-header h4 { margin: 4px 0 12px 0; }
 .time-picker-header .time-helper{ margin: 0 0 12px 0; color:#64748b; font-size:.9rem; }
 .quick-times h5, .custom-time h5 { margin: 12px 0 8px 0; color: #64748b; }
-.quick-time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.quick-time-grid { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 8px; 
+  width: 100%;
+}
 .quick-time-btn { padding: 10px 12px; border-radius: 10px; border: 1px solid #e2e8f0; background: #ffffff; cursor: pointer; font-weight: 600; }
 .quick-time-btn:hover { background: #f1f5f9; }
 .custom-time-input { width: 100%; }
 
 /* Controles interactivos de hora */
-.time-stepper{ display:flex; align-items:center; justify-content:center; gap:8px; margin: 8px 0 12px 0; }
+.time-stepper{ 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  gap:8px; 
+  margin: 8px 0 12px 0; 
+  width: 100%;
+}
 .step-group{ display:flex; align-items:center; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:6px; }
 .step-btn{ border:none; background:#eef2ff; color:#4338ca; border-radius:8px; width:28px; height:28px; font-weight:700; cursor:pointer; }
 .step-btn:hover{ background:#e0e7ff; }
 .time-display-box{ min-width:36px; text-align:center; font-weight:700; }
 .step-sep{ font-weight:700; }
 
-.time-actions{ display:flex; justify-content:flex-end; margin: 8px 0 12px 0; }
+.time-actions{ 
+  display:flex; 
+  justify-content:flex-end; 
+  margin: 8px 0 12px 0; 
+  width: 100%;
+}
 .ok-btn{ padding:10px 16px; border-radius: 8px; line-height: 1; }
 
-.date-input-group, .time-input-group { width: 100%; }
+.date-input-group, .time-input-group { 
+  width: 100%; 
+  box-sizing: border-box;
+}
 .input-label { font-weight: 600; color: #64748b; }
 
 @media (max-width: 420px) {
@@ -310,36 +339,78 @@
     height: 44px;
     font-size: 1rem;
     border-radius: 12px;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .calendar-weekdays {
     font-size: 0.9rem;
     gap: 8px;
+    width: 100%;
+  }
+  
+  .calendar-days {
+    width: 100%;
   }
   
   .quick-time-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    width: 100%;
   }
   
   .quick-time-btn {
     padding: 12px 14px;
     font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .time-stepper {
     gap: 12px;
+    width: 100%;
   }
   
   .step-btn {
     width: 32px;
     height: 32px;
     font-size: 1.1rem;
+    min-width: 32px;
+    min-height: 32px;
   }
   
   .time-display-box {
     min-width: 44px;
     font-size: 1.1rem;
+  }
+  
+  .time-actions {
+    width: 100%;
+  }
+  
+  .date-input-group, .time-input-group {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Asegurar que todos los elementos del picker ocupen el ancho completo */
+  .picker-modal .calendar-header,
+  .picker-modal .time-picker-header,
+  .picker-modal .quick-times,
+  .picker-modal .custom-time,
+  .picker-modal .picker-actions {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .picker-modal .month-nav {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .picker-modal .current-month {
+    flex: 1;
+    text-align: center;
   }
 }
 
@@ -367,27 +438,55 @@
   .calendar-day {
     height: 40px;
     font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .calendar-weekdays {
+    width: 100%;
+  }
+  
+  .calendar-days {
+    width: 100%;
   }
   
   .quick-time-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
+    width: 100%;
   }
   
   .quick-time-btn {
     padding: 10px 12px;
     font-size: 0.8rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .step-btn {
     width: 28px;
     height: 28px;
     font-size: 1rem;
+    min-width: 28px;
+    min-height: 28px;
   }
   
   .time-display-box {
     min-width: 40px;
     font-size: 1rem;
+  }
+  
+  .time-stepper {
+    width: 100%;
+  }
+  
+  .time-actions {
+    width: 100%;
+  }
+  
+  .date-input-group, .time-input-group {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -415,27 +514,55 @@
   .calendar-day {
     height: 36px;
     font-size: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .calendar-weekdays {
+    width: 100%;
+  }
+  
+  .calendar-days {
+    width: 100%;
   }
   
   .quick-time-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
+    width: 100%;
   }
   
   .quick-time-btn {
     padding: 8px 10px;
     font-size: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .step-btn {
     width: 24px;
     height: 24px;
     font-size: 0.9rem;
+    min-width: 24px;
+    min-height: 24px;
   }
   
   .time-display-box {
     min-width: 36px;
     font-size: 0.9rem;
+  }
+  
+  .time-stepper {
+    width: 100%;
+  }
+  
+  .time-actions {
+    width: 100%;
+  }
+  
+  .date-input-group, .time-input-group {
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .month-nav {

@@ -392,20 +392,25 @@ button[type="button"]:hover {
 @media (max-width: 768px) {
   .form {
     gap: 20px;
+    width: 100%;
   }
   
   .form-group {
     gap: 10px;
+    width: 100%;
   }
   
   .input, .textarea {
     padding: 14px 16px;
     font-size: 16px; /* Previene zoom en iOS */
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .form-actions {
     flex-direction: column;
     gap: 12px;
+    width: 100%;
   }
   
   .form-actions .btn {
@@ -414,49 +419,89 @@ button[type="button"]:hover {
     font-size: 1rem;
     min-height: 48px; /* Mejora usabilidad táctil */
     touch-action: manipulation;
+    box-sizing: border-box;
   }
   
   /* Mejorar interacción táctil */
   .btn, .input, .textarea, select {
     touch-action: manipulation;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Asegurar que los labels también ocupen el ancho completo */
+  .label {
+    width: 100%;
+    display: block;
   }
 }
 
 @media (max-width: 480px) {
   .form {
     gap: 18px;
+    width: 100%;
+  }
+  
+  .form-group {
+    gap: 8px;
+    width: 100%;
   }
   
   .input, .textarea {
     padding: 16px 18px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .form-actions {
+    width: 100%;
   }
   
   .form-actions .btn {
     padding: 16px 24px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .label {
+    width: 100%;
+    display: block;
   }
 }
 
 @media (max-width: 360px) {
   .form {
     gap: 16px;
+    width: 100%;
   }
   
   .form-group {
     gap: 8px;
+    width: 100%;
   }
   
   .input, .textarea {
     padding: 14px 16px;
     font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .form-actions {
+    width: 100%;
   }
   
   .form-actions .btn {
     padding: 14px 20px;
     font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .label {
     font-size: 0.85rem;
+    width: 100%;
+    display: block;
   }
 }
 
@@ -745,6 +790,25 @@ button[type="button"]:hover {
     left: 0;
     right: 0;
   }
+  
+  /* Asegurar que todos los elementos del formulario ocupen el ancho completo */
+  .modal-card .form,
+  .modal-card .form-group,
+  .modal-card .input,
+  .modal-card .textarea,
+  .modal-card select,
+  .modal-card .display-btn,
+  .modal-card .form-actions,
+  .modal-card .form-actions .btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Asegurar que los labels ocupen el ancho completo */
+  .modal-card .label {
+    width: 100%;
+    display: block;
+  }
 }
 
 @media (max-width: 480px) {
@@ -765,6 +829,25 @@ button[type="button"]:hover {
     left: 0;
     right: 0;
   }
+  
+  /* Asegurar que todos los elementos del formulario ocupen el ancho completo */
+  .modal-card .form,
+  .modal-card .form-group,
+  .modal-card .input,
+  .modal-card .textarea,
+  .modal-card select,
+  .modal-card .display-btn,
+  .modal-card .form-actions,
+  .modal-card .form-actions .btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Asegurar que los labels ocupen el ancho completo */
+  .modal-card .label {
+    width: 100%;
+    display: block;
+  }
 }
 
 @media (max-width: 360px) {
@@ -784,6 +867,25 @@ button[type="button"]:hover {
     box-sizing: border-box;
     left: 0;
     right: 0;
+  }
+  
+  /* Asegurar que todos los elementos del formulario ocupen el ancho completo */
+  .modal-card .form,
+  .modal-card .form-group,
+  .modal-card .input,
+  .modal-card .textarea,
+  .modal-card select,
+  .modal-card .display-btn,
+  .modal-card .form-actions,
+  .modal-card .form-actions .btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Asegurar que los labels ocupen el ancho completo */
+  .modal-card .label {
+    width: 100%;
+    display: block;
   }
 }
 
