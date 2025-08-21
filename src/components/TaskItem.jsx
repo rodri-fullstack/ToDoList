@@ -96,55 +96,44 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
     
     document.body.appendChild(confettiContainer)
     
-    // Crear todos los confetis de una vez para mejor rendimiento
-    for (let i = 0; i < 50; i++) {
+    // Crear confetis de manera eficiente usando requestAnimationFrame
+    const createConfetti = (index) => {
+      if (index >= 20) return
+      
       const confetti = document.createElement('div')
       confetti.className = 'confetti'
       confetti.style.position = 'absolute'
       confetti.style.left = Math.random() * 100 + 'vw'
       confetti.style.top = '-10px'
-      
-      // Variar tamaños y formas
-      const size = Math.random() > 0.7 ? 10 : Math.random() > 0.5 ? 8 : 6
-      confetti.style.width = size + 'px'
-      confetti.style.height = size + 'px'
-      
-      // Variar formas
-      if (i % 3 === 0) {
-        confetti.style.borderRadius = '0' // Cuadrado
-      } else if (i % 5 === 0) {
-        confetti.style.borderRadius = '2px' // Cuadrado redondeado
-      } else {
-        confetti.style.borderRadius = '50%' // Círculo
-      }
-      
+      confetti.style.width = '8px'
+      confetti.style.height = '8px'
+      confetti.style.borderRadius = '50%'
       confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
-      confetti.style.animationDelay = Math.random() * 1 + 's'
-      confetti.style.animationDuration = Math.random() * 2 + 2 + 's'
+      confetti.style.animationDelay = Math.random() * 0.3 + 's'
+      confetti.style.animationDuration = Math.random() * 1 + 2 + 's'
       
       confettiContainer.appendChild(confetti)
+      
+      // Crear el siguiente confeti en el siguiente frame
+      requestAnimationFrame(() => createConfetti(index + 1))
     }
+    
+    // Iniciar la creación de confetis
+    createConfetti(0)
     
     // Remover el contenedor después de un tiempo
     setTimeout(() => {
       if (confettiContainer.parentNode) {
         confettiContainer.parentNode.removeChild(confettiContainer)
       }
-    }, 5000)
+    }, 4000)
   }
   
   // Función para detener confeti abruptamente
   function stopConfetti() {
     const confettiContainer = document.querySelector(`[data-task-confetti="${task.id}"]`)
     if (confettiContainer) {
-      // Detener todas las animaciones CSS
-      const confettis = confettiContainer.querySelectorAll('.confetti')
-      confettis.forEach(confetti => {
-        confetti.style.animation = 'none'
-        confetti.style.transition = 'none'
-      })
-      
-      // Remover inmediatamente
+      // Remover inmediatamente sin iterar
       confettiContainer.remove()
     }
   }
