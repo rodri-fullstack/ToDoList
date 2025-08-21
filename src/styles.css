@@ -58,6 +58,9 @@ body{
   align-items: center; 
   justify-content: space-between; 
   margin-bottom: 16px;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .toolbar h1 {
@@ -65,6 +68,8 @@ body{
   font-weight: 700;
   color: var(--primary);
   margin: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .card{ 
@@ -97,6 +102,7 @@ body{
 /* Estilos para las pestañas */
 .tabs-container {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .tabs {
@@ -106,6 +112,7 @@ body{
   border: var(--border);
   box-shadow: var(--shadow);
   overflow: hidden;
+  width: 100%;
 }
 
 .tab {
@@ -120,6 +127,8 @@ body{
   align-items: center;
   justify-content: center;
   gap: 8px;
+  min-height: 48px;
+  box-sizing: border-box;
   transition: all 0.2s ease;
   position: relative;
 }
@@ -730,6 +739,23 @@ button[type="button"]:hover {
   .form-actions .btn {
     min-height: 48px;
   }
+  
+  /* Mejorar experiencia táctil general */
+  .btn, .tab, .toggle-btn, .action-btn, .month-nav {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  /* Mejorar hover en dispositivos táctiles */
+  .btn:active, .tab:active, .toggle-btn:active, .action-btn:active {
+    transform: scale(0.98);
+  }
+  
+  /* Asegurar que todos los elementos tengan el ancho correcto */
+  .card, .item, .stat-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 /* Optimizaciones para orientación landscape en móviles */
@@ -749,6 +775,31 @@ button[type="button"]:hover {
   
   .form-group {
     gap: 8px;
+  }
+  
+  /* Optimizar layout en landscape */
+  .toolbar {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .toolbar h1 {
+    flex: none;
+  }
+  
+  .controls {
+    flex-direction: row;
+    gap: 12px;
+  }
+  
+  .segmented {
+    flex: 1;
+  }
+  
+  .search {
+    width: auto;
+    min-width: 200px;
   }
 }
 
@@ -984,6 +1035,8 @@ button[type="button"]:hover {
   
   .empty-state {
     padding: 32px 16px;
+    width: 100%;
+    text-align: center;
   }
   
   .empty-icon {
@@ -997,6 +1050,39 @@ button[type="button"]:hover {
   .empty-state p {
     font-size: 0.9rem;
   }
+  
+  /* Mejorar responsividad de controles */
+  .segmented button {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .category-filter button {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .search {
+    width: 100%;
+  }
+  
+  .search input {
+    min-height: 44px;
+    font-size: 16px;
+  }
+  
+  /* Responsive para pestañas */
+  .tabs-container {
+    margin-bottom: 16px;
+  }
+  
+  .tab {
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
 }
 
 /* Selector de usuario */
@@ -1004,6 +1090,7 @@ button[type="button"]:hover {
   display: flex; 
   align-items: center; 
   gap: 8px; 
+  width: auto;
 }
 
 .user-display {
@@ -1012,6 +1099,8 @@ button[type="button"]:hover {
   border-radius: var(--radius);
   padding: 8px 12px;
   cursor: pointer;
+  min-height: 44px;
+  box-sizing: border-box;
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text);
@@ -1228,40 +1317,220 @@ button[type="button"]:hover {
     flex-direction: column;
     align-items: stretch;
     gap: 16px;
+    width: 100%;
   }
   
   .segmented {
     justify-content: center;
+    width: 100%;
   }
   
   .category-filter {
     justify-content: center;
+    width: 100%;
   }
   
   .actions {
     justify-content: center;
+    width: 100%;
   }
   
   .task-summary {
     flex-direction: column;
     gap: 12px;
+    width: 100%;
   }
   
   .stats-container {
     flex-direction: column;
     gap: 12px;
+    width: 100%;
   }
   
   .search input {
-    width: 200px;
+    width: 100%;
+    max-width: 300px;
   }
   
   .toolbar h1 {
     font-size: 1.8rem;
   }
   
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .user-switcher {
+    align-self: flex-end;
+  }
+  
+  .user-display {
+    min-height: 40px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+  
   .container {
     padding: 24px 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Hacer responsivas las tareas creadas */
+  .item {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .toggle-container {
+    width: 100%;
+  }
+  
+  .toggle-btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 14px 16px;
+    min-height: 52px;
+  }
+  
+  .task-actions {
+    width: 100%;
+    margin-top: 12px;
+    gap: 8px;
+  }
+  
+  .action-btn {
+    flex: 1;
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 12px;
+  }
+  
+  .toolbar h1 {
+    font-size: 1.6rem;
+  }
+  
+  .item {
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+  }
+  
+  .toggle-btn {
+    padding: 12px 14px;
+    min-height: 48px;
+    font-size: 0.9rem;
+  }
+  
+  .task-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .action-btn {
+    width: 100%;
+    min-height: 40px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .search input {
+    max-width: 100%;
+    padding: 12px 14px;
+  }
+  
+  .controls {
+    gap: 12px;
+  }
+  
+  /* Responsive para estadísticas */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .stat-card {
+    padding: 16px;
+    min-height: 80px;
+  }
+  
+  .stat-value {
+    font-size: 1.8rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 16px 8px;
+  }
+  
+  .toolbar h1 {
+    font-size: 1.4rem;
+  }
+  
+  .item {
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+  }
+  
+  .toggle-btn {
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 0.85rem;
+  }
+  
+  .action-btn {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .search input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive para estadísticas en pantallas muy pequeñas */
+  .stats-grid {
+    gap: 8px;
+  }
+  
+  .stat-card {
+    padding: 12px;
+    min-height: 70px;
+  }
+  
+  .stat-value {
+    font-size: 1.6rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+  }
+  
+  /* Responsive para pestañas en pantallas muy pequeñas */
+  .tab {
+    min-height: 40px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .tabs-container {
+    margin-bottom: 12px;
   }
 }
 
