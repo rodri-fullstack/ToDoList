@@ -2365,6 +2365,79 @@ select:focus {
   font-weight: 600 !important;
 }
 
+/* Botones específicos del picker de fecha/hora */
+.picker-actions {
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-top: 20px !important;
+  width: 100% !important;
+}
+
+.picker-actions .cancel-btn {
+  flex: 1 !important;
+  padding: 12px 24px !important;
+  background: #f3f4f6 !important;
+  color: #374151 !important;
+  border: 2px solid #d1d5db !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  min-height: 44px !important;
+}
+
+.picker-actions .cancel-btn:hover {
+  background: #e5e7eb !important;
+  border-color: #9ca3af !important;
+  color: #1f2937 !important;
+}
+
+.picker-actions .confirm-btn {
+  flex: 1 !important;
+  padding: 12px 24px !important;
+  background: #3b82f6 !important;
+  color: white !important;
+  border: 2px solid #3b82f6 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  min-height: 44px !important;
+}
+
+.picker-actions .confirm-btn:hover {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Responsive para los botones del picker */
+@media (max-width: 768px) {
+  .picker-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-top: 16px !important;
+  }
+  
+  .picker-actions .cancel-btn,
+  .picker-actions .confirm-btn {
+    width: 100% !important;
+    padding: 14px 20px !important;
+    min-height: 48px !important;
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .picker-actions {
+    margin-top: 14px !important;
+  }
+  
+  .picker-actions .cancel-btn,
+  .picker-actions .confirm-btn {
+    padding: 16px 24px !important;
+    min-height: 52px !important;
+    font-size: 16px !important;
+  }
+}
+
 .btn:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   transform: translateY(-1px) !important;

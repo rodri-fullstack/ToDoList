@@ -323,15 +323,12 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
                           <button type="button" className="step-btn" onClick={incMinute} aria-label="Aumentar minutos">+</button>
                         </div>
                       </div>
-                      <div className="time-actions">
-                        <button type="button" className="btn primary ok-btn" onClick={()=>setShowCalendar(false)}>OK</button>
-                      </div>
-                      <input type="time" className="input custom-time-input" value={dueTime} onChange={(e)=>setDueTime(e.target.value)} />
+
                     </div>
 
                     <div className="picker-actions">
-                      <button type="button" className="btn" onClick={() => setShowCalendar(false)}>Cancelar</button>
-                      <button type="button" className="btn primary" onClick={() => setShowCalendar(false)}>Listo</button>
+                      <button type="button" className="btn cancel-btn" onClick={() => setShowCalendar(false)}>Cancelar</button>
+                      <button type="button" className="btn primary confirm-btn" onClick={() => setShowCalendar(false)}>Listo</button>
                     </div>
                   </div>
                 </div>
