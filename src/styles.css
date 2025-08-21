@@ -2248,6 +2248,8 @@ button[type="button"]:hover {
   pointer-events: none;
   z-index: 1000;
   overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .confetti {
@@ -2256,9 +2258,10 @@ button[type="button"]:hover {
   height: 8px;
   background: #f00;
   border-radius: 50%;
-  animation: confettiFall 5s linear forwards;
+  animation: confettiFall 4s ease-out forwards;
   z-index: 1000;
   box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  will-change: transform, opacity;
 }
 
 /* Variaciones de confeti */
@@ -2285,11 +2288,14 @@ button[type="button"]:hover {
 
 @keyframes confettiFall {
   0% {
-    transform: translateY(-10px) rotate(0deg);
+    transform: translateY(-10px) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh) rotate(720deg);
+    transform: translateY(100vh) rotate(720deg) scale(0.8);
     opacity: 0;
   }
 }
