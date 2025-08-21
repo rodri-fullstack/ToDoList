@@ -2368,7 +2368,9 @@ select:focus {
 /* Botones específicos del picker de fecha/hora */
 .picker-actions {
   display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between !important;
+  align-items: center !important;
   gap: 12px !important;
   margin-top: 20px !important;
   width: 100% !important;
@@ -2411,15 +2413,15 @@ select:focus {
 /* Responsive para los botones del picker */
 @media (max-width: 768px) {
   .picker-actions {
-    flex-direction: column !important;
+    flex-direction: row !important;
     gap: 10px !important;
     margin-top: 16px !important;
   }
   
   .picker-actions .cancel-btn,
   .picker-actions .confirm-btn {
-    width: 100% !important;
-    padding: 14px 20px !important;
+    flex: 1 !important;
+    padding: 14px 16px !important;
     min-height: 48px !important;
     font-size: 16px !important;
   }
@@ -2428,11 +2430,13 @@ select:focus {
 @media (max-width: 480px) {
   .picker-actions {
     margin-top: 14px !important;
+    gap: 8px !important;
   }
   
   .picker-actions .cancel-btn,
   .picker-actions .confirm-btn {
-    padding: 16px 24px !important;
+    flex: 1 !important;
+    padding: 16px 20px !important;
     min-height: 52px !important;
     font-size: 16px !important;
   }
