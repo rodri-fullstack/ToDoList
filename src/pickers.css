@@ -186,7 +186,7 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
-  margin: 6px 0;
+  margin: 6px 0 8px 0;
   color: #64748b;
   font-size: 0.75rem;
   text-align: center;
@@ -194,6 +194,8 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
+  box-sizing: border-box;
+  padding: 0 2px;
 }
 
 .calendar-days { 
@@ -201,6 +203,8 @@
   grid-template-columns: repeat(7, 1fr); 
   gap: 4px; 
   width: 100%;
+  box-sizing: border-box;
+  padding: 0 2px;
 }
 
 .calendar-day {
@@ -252,12 +256,14 @@
   
   .calendar-weekdays {
     gap: 3px;
-    margin: 4px 0;
+    margin: 4px 0 6px 0;
     font-size: 0.7rem;
+    padding: 0 1px;
   }
   
   .calendar-days {
     gap: 3px;
+    padding: 0 1px;
   }
   
   .calendar-day {
@@ -289,12 +295,14 @@
   
   .calendar-weekdays {
     gap: 2px;
-    margin: 3px 0;
+    margin: 3px 0 5px 0;
     font-size: 0.65rem;
+    padding: 0 1px;
   }
   
   .calendar-days {
     gap: 2px;
+    padding: 0 1px;
   }
   
   .calendar-day {
@@ -338,12 +346,14 @@
   
   .calendar-weekdays {
     gap: 1px;
-    margin: 2px 0;
+    margin: 2px 0 4px 0;
     font-size: 0.6rem;
+    padding: 0 1px;
   }
   
   .calendar-days {
     gap: 1px;
+    padding: 0 1px;
   }
   
   .calendar-day {
@@ -515,12 +525,14 @@
     font-size: 0.9rem;
     gap: 6px;
     width: 100%;
-    margin: 12px 0;
+    margin: 12px 0 16px 0;
+    padding: 0 3px;
   }
   
   .calendar-days {
     width: 100%;
     gap: 6px;
+    padding: 0 3px;
   }
   
   .quick-time-grid {
@@ -651,13 +663,15 @@
   .calendar-weekdays {
     width: 100%;
     gap: 4px;
-    margin: 10px 0;
+    margin: 10px 0 14px 0;
     font-size: 0.85rem;
+    padding: 0 2px;
   }
   
   .calendar-days {
     width: 100%;
     gap: 4px;
+    padding: 0 2px;
   }
   
   .quick-time-grid {
@@ -768,13 +782,15 @@
   .calendar-weekdays {
     width: 100%;
     gap: 3px;
-    margin: 8px 0;
+    margin: 8px 0 12px 0;
     font-size: 0.8rem;
+    padding: 0 1px;
   }
   
   .calendar-days {
     width: 100%;
     gap: 3px;
+    padding: 0 1px;
   }
   
   .quick-time-grid {
