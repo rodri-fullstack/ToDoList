@@ -183,6 +183,9 @@
   font-size: 0.8rem;
   text-align: center;
   width: 100%;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .calendar-days { 
@@ -200,6 +203,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  box-sizing: border-box;
 }
 
 .calendar-day.current-month { background: #ffffff; }
@@ -266,7 +274,20 @@
   gap: 8px; 
   width: 100%;
 }
-.quick-time-btn { padding: 10px 12px; border-radius: 10px; border: 1px solid #e2e8f0; background: #ffffff; cursor: pointer; font-weight: 600; }
+.quick-time-btn { 
+  padding: 10px 12px; 
+  border-radius: 10px; 
+  border: 1px solid #e2e8f0; 
+  background: #ffffff; 
+  cursor: pointer; 
+  font-weight: 600; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
 .quick-time-btn:hover { background: #f1f5f9; }
 .custom-time-input { width: 100%; }
 
@@ -280,7 +301,22 @@
   width: 100%;
 }
 .step-group{ display:flex; align-items:center; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:6px; }
-.step-btn{ border:none; background:#eef2ff; color:#4338ca; border-radius:8px; width:28px; height:28px; font-weight:700; cursor:pointer; }
+.step-btn{ 
+  border:none; 
+  background:#eef2ff; 
+  color:#4338ca; 
+  border-radius:8px; 
+  width:28px; 
+  height:28px; 
+  font-weight:700; 
+  cursor:pointer; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  transition: all 0.15s ease;
+}
 .step-btn:hover{ background:#e0e7ff; }
 .time-display-box{ min-width:36px; text-align:center; font-weight:700; }
 .step-sep{ font-weight:700; }
@@ -306,8 +342,37 @@
 
 /* Responsive para pickers en móviles */
 @media (max-width: 768px) {
+  /* Mejorar experiencia táctil */
+  .calendar-day,
+  .quick-time-btn,
+  .step-btn,
+  .month-nav {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  /* Mejorar hover en dispositivos táctiles */
+  .calendar-day:active:not(.past):not(.selected) {
+    transform: scale(0.95);
+    background: #e2e8f0;
+  }
+  
+  .quick-time-btn:active {
+    transform: scale(0.95);
+    background: #e2e8f0;
+  }
+  
+  .step-btn:active {
+    transform: scale(0.95);
+    background: #dbeafe;
+  }
+  
+  .month-nav:active {
+    transform: scale(0.95);
+    background: #dbeafe;
+  }
   .picker-overlay {
-    padding: 12px;
+    padding: 8px;
     width: 100vw;
     height: 100vh;
     left: 0;
@@ -319,12 +384,14 @@
   .picker-modal {
     max-width: 100%;
     width: 100%;
-    padding: 20px;
-    border-radius: 20px;
+    padding: 16px;
+    border-radius: 16px;
     box-sizing: border-box;
     margin: 0;
     left: 0;
     right: 0;
+    max-height: 90vh;
+    overflow-y: auto;
   }
   
   .calendar-modal {
@@ -336,56 +403,68 @@
   }
   
   .calendar-day {
-    height: 44px;
+    height: 48px;
     font-size: 1rem;
     border-radius: 12px;
     width: 100%;
     box-sizing: border-box;
+    min-height: 48px;
   }
   
   .calendar-weekdays {
     font-size: 0.9rem;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
+    margin: 12px 0;
   }
   
   .calendar-days {
     width: 100%;
+    gap: 6px;
   }
   
   .quick-time-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
     width: 100%;
+    margin: 16px 0;
   }
   
   .quick-time-btn {
-    padding: 12px 14px;
+    padding: 14px 12px;
     font-size: 0.9rem;
     width: 100%;
     box-sizing: border-box;
+    min-height: 48px;
+    border-radius: 12px;
   }
   
   .time-stepper {
-    gap: 12px;
+    gap: 16px;
     width: 100%;
+    margin: 20px 0;
   }
   
   .step-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.1rem;
-    min-width: 32px;
-    min-height: 32px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 10px;
   }
   
   .time-display-box {
-    min-width: 44px;
-    font-size: 1.1rem;
+    min-width: 50px;
+    font-size: 1.2rem;
+    padding: 8px;
+    background: #f8fafc;
+    border-radius: 8px;
   }
   
   .time-actions {
     width: 100%;
+    margin: 16px 0;
   }
   
   .date-input-group, .time-input-group {
@@ -404,19 +483,43 @@
   }
   
   .picker-modal .month-nav {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 10px;
+    font-size: 1.1rem;
   }
   
   .picker-modal .current-month {
     flex: 1;
     text-align: center;
+    font-size: 1.1rem;
+    margin: 0 8px;
+  }
+  
+  /* Mejorar espaciado en móviles */
+  .time-picker-header {
+    margin: 20px 0 16px 0;
+  }
+  
+  .time-picker-header h4 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  
+  .time-picker-header .time-helper {
+    font-size: 0.9rem;
+    color: #64748b;
+  }
+  
+  .quick-times h5, .custom-time h5 {
+    font-size: 1rem;
+    margin: 16px 0 12px 0;
   }
 }
 
 @media (max-width: 480px) {
   .picker-overlay {
-    padding: 8px;
+    padding: 6px;
     width: 100vw;
     height: 100vh;
     left: 0;
@@ -426,67 +529,108 @@
   }
   
   .picker-modal {
-    padding: 16px;
-    border-radius: 16px;
+    padding: 14px;
+    border-radius: 14px;
     width: 100%;
     max-width: 100%;
     margin: 0;
     left: 0;
     right: 0;
+    max-height: 92vh;
   }
   
   .calendar-day {
-    height: 40px;
+    height: 44px;
     font-size: 0.9rem;
     width: 100%;
     box-sizing: border-box;
+    min-height: 44px;
+    border-radius: 10px;
   }
   
   .calendar-weekdays {
     width: 100%;
+    gap: 4px;
+    margin: 10px 0;
+    font-size: 0.85rem;
   }
   
   .calendar-days {
     width: 100%;
+    gap: 4px;
   }
   
   .quick-time-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
     width: 100%;
+    margin: 12px 0;
   }
   
   .quick-time-btn {
-    padding: 10px 12px;
+    padding: 12px 10px;
     font-size: 0.8rem;
     width: 100%;
     box-sizing: border-box;
+    min-height: 44px;
+    border-radius: 10px;
   }
   
   .step-btn {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     font-size: 1rem;
-    min-width: 28px;
-    min-height: 28px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 8px;
   }
   
   .time-display-box {
-    min-width: 40px;
+    min-width: 44px;
     font-size: 1rem;
+    padding: 6px;
   }
   
   .time-stepper {
     width: 100%;
+    gap: 12px;
+    margin: 16px 0;
   }
   
   .time-actions {
     width: 100%;
+    margin: 12px 0;
   }
   
   .date-input-group, .time-input-group {
     width: 100%;
     box-sizing: border-box;
+  }
+  
+  /* Mejorar navegación del calendario */
+  .month-nav {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
+  
+  .current-month {
+    font-size: 1rem;
+  }
+  
+  /* Mejorar espaciado */
+  .time-picker-header {
+    margin: 16px 0 12px 0;
+  }
+  
+  .time-picker-header h4 {
+    font-size: 1.1rem;
+  }
+  
+  .quick-times h5, .custom-time h5 {
+    font-size: 0.95rem;
+    margin: 12px 0 8px 0;
   }
 }
 
@@ -502,62 +646,77 @@
   }
   
   .picker-modal {
-    padding: 12px;
-    border-radius: 12px;
+    padding: 10px;
+    border-radius: 10px;
     width: 100%;
     max-width: 100%;
     margin: 0;
     left: 0;
     right: 0;
+    max-height: 94vh;
   }
   
   .calendar-day {
-    height: 36px;
+    height: 40px;
     font-size: 0.85rem;
     width: 100%;
     box-sizing: border-box;
+    min-height: 40px;
+    border-radius: 8px;
   }
   
   .calendar-weekdays {
     width: 100%;
+    gap: 3px;
+    margin: 8px 0;
+    font-size: 0.8rem;
   }
   
   .calendar-days {
     width: 100%;
+    gap: 3px;
   }
   
   .quick-time-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    gap: 4px;
     width: 100%;
+    margin: 10px 0;
   }
   
   .quick-time-btn {
-    padding: 8px 10px;
+    padding: 10px 8px;
     font-size: 0.75rem;
     width: 100%;
     box-sizing: border-box;
+    min-height: 40px;
+    border-radius: 8px;
   }
   
   .step-btn {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     font-size: 0.9rem;
-    min-width: 24px;
-    min-height: 24px;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 6px;
   }
   
   .time-display-box {
-    min-width: 36px;
+    min-width: 40px;
     font-size: 0.9rem;
+    padding: 4px;
   }
   
   .time-stepper {
     width: 100%;
+    gap: 8px;
+    margin: 12px 0;
   }
   
   .time-actions {
     width: 100%;
+    margin: 10px 0;
   }
   
   .date-input-group, .time-input-group {
@@ -566,13 +725,40 @@
   }
   
   .month-nav {
-    min-width: 36px;
-    min-height: 36px;
+    min-width: 40px;
+    min-height: 40px;
     font-size: 0.9rem;
-    padding: 4px 8px;
+    padding: 4px 6px;
+    border-radius: 6px;
   }
   
   .current-month {
+    font-size: 0.9rem;
+    margin: 0 6px;
+  }
+  
+  /* Mejorar espaciado en pantallas muy pequeñas */
+  .time-picker-header {
+    margin: 12px 0 10px 0;
+  }
+  
+  .time-picker-header h4 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+  
+  .quick-times h5, .custom-time h5 {
+    font-size: 0.9rem;
+    margin: 10px 0 6px 0;
+  }
+  
+  .picker-actions {
+    margin-top: 10px;
+  }
+  
+  .picker-actions .btn {
+    padding: 12px 16px;
+    min-height: 44px;
     font-size: 0.9rem;
   }
 }
