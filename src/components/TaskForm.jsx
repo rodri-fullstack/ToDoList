@@ -5,13 +5,10 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
   const [description, setDescription] = useState(defaultValues?.description ?? '')
   const [category, setCategory] = useState(defaultValues?.category ?? 'general')
   const [dueDate, setDueDate] = useState(defaultValues?.dueDate ? formatDateForInput(defaultValues.dueDate) : '')
-  const [dueTime, setDueTime] = useState(defaultValues?.dueTime ?? '')
   const [showCalendar, setShowCalendar] = useState(false)
-  const [showTimePicker, setShowTimePicker] = useState(false)
   const [selectedDate, setSelectedDate] = useState(defaultValues?.dueDate ? new Date(defaultValues.dueDate) : null)
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const calendarRef = useRef(null)
-  const timePickerRef = useRef(null)
 
   // Función para convertir fecha ISO a formato yyyy-mm-dd para el input date
   function formatDateForInput(isoDate) {
@@ -113,7 +110,7 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
     setDueDate(`${year}-${month}-${day}`)
-    // No cerrar el modal aquí, para permitir elegir la hora
+    setShowCalendar(false) // Cerrar el calendario al seleccionar fecha
   }
 
   // Función para cambiar mes
@@ -125,48 +122,11 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
     })
   }
 
-  // Función para seleccionar hora rápida
-  function selectQuickTime(time) {
-    setDueTime(time)
-    // Cerrar automáticamente tras elegir hora rápida
-    setShowCalendar(false)
-  }
-
-  // Utilidades para personalizar la hora de forma interactiva
-  function parseTime(value){
-    const [hStr, mStr] = (value || '09:00').split(':')
-    const h = Math.max(0, Math.min(23, parseInt(hStr ?? '9', 10) || 0))
-    const m = Math.max(0, Math.min(59, parseInt(mStr ?? '0', 10) || 0))
-    return { h, m }
-  }
-  function formatTime(parts){
-    const h = String(parts.h).padStart(2, '0')
-    const m = String(parts.m).padStart(2, '0')
-    return `${h}:${m}`
-  }
-  function adjustTime(deltaH, deltaM){
-    const { h, m } = parseTime(dueTime)
-    let newH = (h + deltaH + 24) % 24
-    let totalM = m + deltaM
-    if (totalM >= 60){ newH = (newH + Math.floor(totalM / 60)) % 24; totalM = totalM % 60 }
-    if (totalM < 0){ const borrow = Math.ceil(Math.abs(totalM)/60); newH = (newH - borrow + 24)%24; totalM = (totalM % 60 + 60) % 60 }
-    setDueTime(formatTime({ h: newH, m: totalM }))
-  }
-  const stepMinutes = 5
-  const incHour = () => adjustTime(1, 0)
-  const decHour = () => adjustTime(-1, 0)
-  const incMinute = () => adjustTime(0, stepMinutes)
-  const decMinute = () => adjustTime(0, -stepMinutes)
-  const setMinutes = (min) => { const { h } = parseTime(dueTime); setDueTime(formatTime({ h, m: min })); setShowCalendar(false) }
-
   // Cerrar calendario al hacer clic fuera
   useEffect(() => {
     function handleClickOutside(event) {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setShowCalendar(false)
-      }
-      if (timePickerRef.current && !timePickerRef.current.contains(event.target)) {
-        setShowTimePicker(false)
       }
     }
 
@@ -179,12 +139,13 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
     function handleEsc(event){
       if(event.key === 'Escape'){
         setShowCalendar(false)
-        setShowTimePicker(false)
       }
     }
     document.addEventListener('keydown', handleEsc)
     return () => document.removeEventListener('keydown', handleEsc)
   }, [])
+
+
 
   function handleSubmit(e){
     e.preventDefault()
@@ -195,10 +156,10 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
       description: description || '', 
       category: category || 'general',
       dueDate: parseDateInput(dueDate),
-      dueTime: dueTime || null
+      dueTime: null // Siempre null ya que no manejamos hora
     }
     onSubmit(formData)
-    if(!defaultValues){ setTitle(''); setDescription(''); setCategory('general'); setDueDate(''); setDueTime('') }
+    if(!defaultValues){ setTitle(''); setDescription(''); setCategory('general'); setDueDate('') }
   }
 
   return (
@@ -220,7 +181,7 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
           onChange={(e)=>setDescription(e.target.value)} 
         />
       </div>
-      <div className="form-group">
+      <div className="form-group select-group">
         <label className="label" htmlFor="category-select">Categoría</label>
         <select 
           id="category-select"
@@ -238,8 +199,8 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
         </select>
       </div>
       <div className="form-group">
-        <label className="label" htmlFor="date-time-picker">Fecha y hora límite</label>
-        <div className="date-time-container">
+        <label className="label" htmlFor="date-picker">Fecha límite</label>
+        <div className="date-container">
           <div className="date-input-group">
             <div className="date-picker-container">
               <button
@@ -251,7 +212,7 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
               >
                 <span className="display-icon">📅</span>
                 <span className="display-text">
-                  {dueDate ? `${formatDisplayDate(dueDate)}${dueTime ? ` · ${dueTime}` : ''}` : 'Seleccionar'}
+                  {dueDate ? formatDisplayDate(dueDate) : 'Seleccionar fecha'}
                 </span>
               </button>
 
@@ -302,79 +263,9 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
                       ))}
                     </div>
 
-                    <div className="time-picker-header">
-                      <h4>Personalizar la hora</h4>
-                      <p className="time-helper">Elige una hora rápida o ajusta manualmente</p>
-                    </div>
-                    <div className="quick-times">
-                      <div className="quick-time-grid">
-                        {['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00'].map(time => (
-                          <button key={time} type="button" className="quick-time-btn" onClick={() => selectQuickTime(time)}>
-                            {time}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="custom-time">
-                      <button 
-                        type="button" 
-                        className="time-display-btn"
-                        onClick={() => setShowTimePicker(true)}
-                        aria-label="Ajustar hora personalizada"
-                      >
-                        <span className="time-display-text">
-                          {dueTime ? dueTime : '00:00'}
-                        </span>
-                        <span className="time-display-icon">⏰</span>
-                      </button>
-                    </div>
-
                     <div className="picker-actions">
                       <button type="button" className="btn cancel-btn" onClick={() => setShowCalendar(false)}>Cancelar</button>
                       <button type="button" className="btn primary confirm-btn" onClick={() => setShowCalendar(false)}>Listo</button>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-                            {/* Time picker flotante con sombra oscura */}
-              {showTimePicker && (
-                <div className="time-picker-floating" ref={timePickerRef}>
-                  <div className="time-picker-wheels">
-                    <div className="time-wheel-container">
-                      <div className="time-wheel" role="group" aria-label="Seleccionar hora">
-                        <div className="wheel-items">
-                          {Array.from({length: 24}, (_, i) => (
-                            <div 
-                              key={i} 
-                              className={`wheel-item ${parseTime(dueTime).h === i ? 'selected' : ''}`}
-                              onClick={() => setDueTime(formatTime({ h: i, m: parseTime(dueTime).m }))}
-                              aria-label={`Hora ${i}`}
-                            >
-                              {i.toString().padStart(2, '0')}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="time-separator">:</div>
-                    
-                    <div className="time-wheel-container">
-                      <div className="time-wheel" role="group" aria-label="Seleccionar minutos">
-                        <div className="wheel-items">
-                          {Array.from({length: 60}, (_, i) => i % 5 === 0).map((_, i) => i * 5).map(minute => (
-                            <div 
-                              key={minute} 
-                              className={`wheel-item ${parseTime(dueTime).m === minute ? 'selected' : ''}`}
-                              onClick={() => setDueTime(formatTime({ h: parseTime(dueTime).h, m: minute }))}
-                              aria-label={`Minuto ${minute}`}
-                            >
-                              {minute.toString().padStart(2, '0')}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -383,8 +274,8 @@ export default function TaskForm({ onSubmit, onCancel, defaultValues }) {
           </div>
         </div>
         
-        <div className="date-time-help">
-          <span className="help-text">💡 Selecciona una fecha y hora para establecer un recordatorio</span>
+        <div className="date-help">
+          <span className="help-text">💡 Selecciona una fecha para establecer un recordatorio</span>
         </div>
       </div>
       <div className="form-actions">

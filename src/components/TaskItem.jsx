@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-// Helpers de fecha: usar fecha y hora exactas seleccionadas por el usuario
+// Helpers de fecha: usar solo fecha seleccionada por el usuario (sin hora)
 function getDueDateTime(task){
   if(!task || !task.dueDate) return null
   const [y, m, d] = task.dueDate.split('-').map(Number)
-  const [hh, mm] = (task.dueTime || '23:59').split(':').map(Number)
-  return new Date(y, (m || 1)-1, d || 1, hh || 0, mm || 0)
+  // Usar 23:59 como hora por defecto para determinar si está vencida
+  return new Date(y, (m || 1)-1, d || 1, 23, 59)
 }
 
 function isOverdue(task) {
@@ -209,9 +209,6 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }){
           <p className={`due-date ${overdue && !task.completed ? 'overdue' : ''}`}>
             <span className="due-icon">📅</span>
             Vence: {formatDate(task.dueDate)}
-            {task.dueTime && (
-              <span className="due-time"> a las {task.dueTime}</span>
-            )}
             {overdue && !task.completed && (
               <span className="overdue-badge"> ⚠️ Vencida</span>
             )}

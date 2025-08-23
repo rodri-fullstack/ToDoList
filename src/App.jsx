@@ -3,13 +3,15 @@ import TaskList from './components/TaskList'
 import TaskForm from './components/TaskForm'
 import Modal from './components/Modal'
 import Tabs from './components/Tabs'
+import Login from './components/Login'
+import UserProfile from './components/UserProfile'
+import { useAuth } from './contexts/AuthContext'
 import useLocalStorage from './hooks/useLocalStorage'
 import { filterAndSortTasks } from './utils/tasks'
 
 export default function App() {
-  // Usuario actual (autenticación básica por perfil)
-  const [userId, setUserId] = useLocalStorage('lista-tareas.user.v1', 'Invitado')
-  const storageKey = `lista-tareas.v2.${userId}`
+  const { currentUser } = useAuth()
+  const storageKey = `lista-tareas.v2.${currentUser.id}`
   const [tasks, setTasks] = useLocalStorage(storageKey, [])
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
@@ -19,9 +21,9 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('tasks')
   const [timeTick, setTimeTick] = useState(Date.now())
 
-  // Estados para el selector de usuario
-  const [showUserDropdown, setShowUserDropdown] = useState(false)
-  const userSelectRef = useRef(null)
+  // Estados para autenticación
+  const [showLoginModal, setShowLoginModal] = useState(false)
+  const [showUserProfile, setShowUserProfile] = useState(false)
 
   // Estado para el modal de nueva tarea
   const [showNewTaskModal, setShowNewTaskModal] = useState(false)
@@ -35,12 +37,12 @@ export default function App() {
     return () => clearInterval(id)
   }, [])
 
-  // Utilidades de fecha para contadores rápidos (con hora actual)
+  // Utilidades de fecha para contadores rápidos (solo fecha, sin hora)
   const parseTaskDue = (t) => {
     if (!t || !t.dueDate) return null
     const [y, m, d] = t.dueDate.split('-').map(Number)
-    const [hh, mm] = (t.dueTime || '23:59').split(':').map(Number)
-    return new Date(y, (m || 1) - 1, d || 1, hh || 0, mm || 0)
+    // Usar 23:59 como hora por defecto para determinar si está vencida
+    return new Date(y, (m || 1) - 1, d || 1, 23, 59)
   }
   // (Se eliminan contadores especiales de vencimientos)
 
@@ -58,23 +60,16 @@ export default function App() {
     try{ document.body.style.overflow = '' }catch{}
   }
 
-  // Función para cambiar de usuario
-  function handleUserChange(user) {
-    setUserId(user)
-    setShowUserDropdown(false)
+  // Función para cerrar modales de autenticación
+  function closeLoginModal() {
+    setShowLoginModal(false)
+    try{ document.body.style.overflow = '' }catch{}
   }
 
-  // Efecto para cerrar el dropdown de usuario al hacer clic fuera
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (userSelectRef.current && !userSelectRef.current.contains(event.target)) {
-        setShowUserDropdown(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  function closeUserProfile() {
+    setShowUserProfile(false)
+    try{ document.body.style.overflow = '' }catch{}
+  }
 
   // Efecto para mostrar indicador de atención en la primera visita
   useEffect(() => {
@@ -86,6 +81,8 @@ export default function App() {
       localStorage.setItem('lista-tareas.hasSeenApp', 'true')
     }
   }, [tasks.length])
+
+
 
   function addTask(input) {
     // Verificar que input contiene los datos necesarios
@@ -101,7 +98,7 @@ export default function App() {
       createdAt: now,
       updatedAt: now,
       dueDate: input.dueDate || null,
-      dueTime: input.dueTime || null,
+      // dueTime ya no se incluye
     }
     // Añadir la nueva tarea al principio del array
     setTasks(prev => [newTask, ...prev])
@@ -218,6 +215,16 @@ export default function App() {
                 </select>
               </div>
 
+              <div className="date-sort-filter">
+                <label>Ordenar por fecha:</label>
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                  <option value="updatedDesc">Más recientes</option>
+                  <option value="createdDesc">Fecha de creación</option>
+                  <option value="dueAsc">Fecha límite (próximas)</option>
+                  <option value="dueDesc">Fecha límite (lejanas)</option>
+                </select>
+              </div>
+
               <div className="actions">
                 <div className="search">
                   <span>🔎</span>
@@ -304,27 +311,21 @@ export default function App() {
             <span className="create-text">Crear Tarea</span>
           </button>
         </div>
-        <div className="user-switcher">
-          <button 
-            className="user-display"
-            onClick={() => setShowUserDropdown(!showUserDropdown)}
-            ref={userSelectRef}
-          >
-            👤 {userId}
-            <span className="dropdown-arrow">▼</span>
-          </button>
-          {showUserDropdown && (
-            <div className="user-dropdown">
-              {['Invitado', 'Usuario 1', 'Usuario 2'].map(user => (
-                <button
-                  key={user}
-                  className={`user-option ${userId === user ? 'active' : ''}`}
-                  onClick={() => handleUserChange(user)}
-                >
-                  {user}
-                </button>
-              ))}
-            </div>
+        <div className="user-section">
+          {currentUser.isGuest ? (
+            <button 
+              className="login-btn"
+              onClick={() => setShowLoginModal(true)}
+            >
+              👤 Iniciar Sesión
+            </button>
+          ) : (
+            <button 
+              className="user-profile-btn"
+              onClick={() => setShowUserProfile(true)}
+            >
+              👤 {currentUser.username}
+            </button>
           )}
         </div>
       </header>
@@ -343,8 +344,6 @@ export default function App() {
         )}
       </Modal>
 
-
-
       {/* Modal para nueva tarea */}
       <Modal open={showNewTaskModal} title="Nueva tarea" onClose={closeNewTaskModal}>
         <TaskForm 
@@ -354,6 +353,16 @@ export default function App() {
           }}
           onCancel={closeNewTaskModal}
         />
+      </Modal>
+
+      {/* Modal de autenticación */}
+      <Modal open={showLoginModal} title="Autenticación" onClose={closeLoginModal}>
+        <Login onClose={closeLoginModal} />
+      </Modal>
+
+      {/* Modal de perfil de usuario */}
+      <Modal open={showUserProfile} title="Perfil de Usuario" onClose={closeUserProfile}>
+        <UserProfile onClose={closeUserProfile} />
       </Modal>
     </div>
   )

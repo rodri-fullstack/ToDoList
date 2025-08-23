@@ -34,6 +34,11 @@ export function filterAndSortTasks(tasks, options) {
       const bd = b.dueDate ?? '9999-12-31'
       return ad.localeCompare(bd)
     }
+    if (sortBy === 'dueDesc') {
+      const ad = a.dueDate ?? '0000-01-01'
+      const bd = b.dueDate ?? '0000-01-01'
+      return bd.localeCompare(ad)
+    }
     if (sortBy === 'status') {
       return Number(a.completed) - Number(b.completed)
     }

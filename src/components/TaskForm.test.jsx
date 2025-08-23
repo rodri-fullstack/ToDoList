@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TaskForm from './TaskForm'
+import { TASK_CATEGORIES, DEFAULT_CATEGORY } from '../utils/constants'
 
 describe('TaskForm Component', () => {
   const user = userEvent.setup()
@@ -33,7 +34,7 @@ describe('TaskForm Component', () => {
       
       expect(titleInput.value).toBe('')
       expect(descriptionInput.value).toBe('')
-      expect(categorySelect.value).toBe('general')
+      expect(categorySelect.value).toBe(DEFAULT_CATEGORY)
     })
 
     it('debe mostrar todas las opciones de categoría', () => {
@@ -42,14 +43,11 @@ describe('TaskForm Component', () => {
       const categorySelect = screen.getByRole('combobox', { name: /categoría/i })
       const options = categorySelect.querySelectorAll('option')
       
-      expect(options).toHaveLength(7)
-      expect(options[0]).toHaveValue('general')
-      expect(options[1]).toHaveValue('trabajo')
-      expect(options[2]).toHaveValue('personal')
-      expect(options[3]).toHaveValue('estudio')
-      expect(options[4]).toHaveValue('hogar')
-      expect(options[5]).toHaveValue('salud')
-      expect(options[6]).toHaveValue('finanzas')
+      expect(options).toHaveLength(TASK_CATEGORIES.length)
+      TASK_CATEGORIES.forEach((cat, index) => {
+        expect(options[index]).toHaveValue(cat.value)
+        expect(options[index]).toHaveTextContent(cat.label)
+      })
     })
 
     it('debe permitir escribir en el campo título', async () => {
@@ -203,12 +201,12 @@ describe('TaskForm Component', () => {
           title: 'Tarea actualizada',
           description: 'Descripción existente',
           category: 'personal',
-          dueTime: '14:30'
+          dueTime: null
         })
       )
     })
 
-    it('debe manejar fechas y horas correctamente', async () => {
+    it('debe manejar fechas correctamente (sin hora)', async () => {
       render(
         <TaskForm 
           onSubmit={mockOnSubmit} 
@@ -222,7 +220,7 @@ describe('TaskForm Component', () => {
       
       expect(mockOnSubmit).toHaveBeenCalledWith(
         expect.objectContaining({
-          dueTime: '14:30'
+          dueTime: null
         })
       )
     })
@@ -302,7 +300,7 @@ describe('TaskForm Component', () => {
       render(<TaskForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />)
       
       expect(screen.getByText('Categoría')).toBeInTheDocument()
-      expect(screen.getByText('Fecha y hora límite')).toBeInTheDocument()
+      expect(screen.getByText('Fecha límite')).toBeInTheDocument()
     })
 
     it('debe tener botones con nombres descriptivos', () => {

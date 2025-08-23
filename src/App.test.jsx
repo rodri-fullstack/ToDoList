@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
+import { AuthProvider } from './contexts/AuthContext'
 
 // Mock del hook useLocalStorage
 const mockLocalStorage = {
@@ -40,10 +41,18 @@ describe('Gestor de Tareas - App Principal', () => {
     // Limpiar todos los mocks antes de cada test
     vi.clearAllMocks()
     
-    // Configurar localStorage mock por defecto
+    // Configurar localStorage mock por defecto para el sistema de autenticación
     mockLocalStorage.getItem.mockImplementation((key) => {
-      if (key === 'lista-tareas.user.v1') return 'Invitado'
-      if (key === 'lista-tareas.v2.Invitado') return '[]'
+      if (key === 'lista-tareas.users') return JSON.stringify([
+        { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+      ])
+      if (key === 'lista-tareas.currentUser') return JSON.stringify({
+        id: 'guest',
+        username: 'Invitado',
+        email: '',
+        isGuest: true
+      })
+      if (key === 'lista-tareas.v2.guest') return '[]'
       return null
     })
     
@@ -57,7 +66,11 @@ describe('Gestor de Tareas - App Principal', () => {
 
   describe('1. Crear Tarea', () => {
     it('debe mostrar el botón "Crear Tarea" en la barra de herramientas', () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const createButton = screen.getByRole('button', { name: /crear nueva tarea/i })
       expect(createButton).toBeInTheDocument()
@@ -65,7 +78,11 @@ describe('Gestor de Tareas - App Principal', () => {
     })
 
     it('debe abrir el modal de nueva tarea al hacer clic en "Crear Tarea"', async () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const createButton = screen.getByRole('button', { name: /crear nueva tarea/i })
       await user.click(createButton)
@@ -76,7 +93,11 @@ describe('Gestor de Tareas - App Principal', () => {
     })
 
     it('debe crear una nueva tarea con título y descripción', async () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Abrir modal de nueva tarea
       const createButton = screen.getByRole('button', { name: /crear nueva tarea/i })
@@ -102,7 +123,11 @@ describe('Gestor de Tareas - App Principal', () => {
     })
 
     it('debe validar que el título sea obligatorio', async () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Abrir modal de nueva tarea
       const createButton = screen.getByRole('button', { name: /crear nueva tarea/i })
@@ -117,7 +142,11 @@ describe('Gestor de Tareas - App Principal', () => {
     })
 
     it('debe cerrar el modal después de crear una tarea exitosamente', async () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Abrir modal de nueva tarea
       const createButton = screen.getByRole('button', { name: /crear nueva tarea/i })
@@ -139,7 +168,11 @@ describe('Gestor de Tareas - App Principal', () => {
 
   describe('2. Listar Tareas', () => {
     it('debe mostrar mensaje cuando no hay tareas', () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       expect(screen.getByText('Aún no tienes tareas')).toBeInTheDocument()
       expect(screen.getByText(/Crea tu primera tarea usando el botón/)).toBeInTheDocument()
@@ -169,12 +202,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       expect(screen.getByText('Tarea 1')).toBeInTheDocument()
       expect(screen.getByText('Tarea 2')).toBeInTheDocument()
@@ -189,12 +234,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       expect(screen.getByText('Total:')).toBeInTheDocument()
       expect(screen.getByText('Total:')).toBeInTheDocument()
@@ -219,12 +276,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const statusButton = screen.getByText('Pendiente')
       expect(statusButton).toBeInTheDocument()
@@ -237,12 +306,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const statusButton = screen.getByText('Completada')
       expect(statusButton).toBeInTheDocument()
@@ -255,12 +336,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Verificar estado inicial
       expect(screen.getByText('Pendiente')).toBeInTheDocument()
@@ -286,12 +379,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const editButton = screen.getByRole('button', { name: /editar tarea/i })
       expect(editButton).toBeInTheDocument()
@@ -304,12 +409,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Hacer clic en editar
       const editButton = screen.getByRole('button', { name: /editar tarea/i })
@@ -332,12 +449,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Abrir modal de edición
       const editButton = screen.getByRole('button', { name: /editar tarea/i })
@@ -374,12 +503,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const deleteButton = screen.getByRole('button', { name: /eliminar tarea/i })
       expect(deleteButton).toBeInTheDocument()
@@ -392,12 +533,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Hacer clic en eliminar
       const deleteButton = screen.getByRole('button', { name: /eliminar tarea/i })
@@ -416,12 +569,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Verificar que la tarea existe
       expect(screen.getByText('Tarea para eliminar')).toBeInTheDocument()
@@ -449,12 +614,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Verificar que la tarea existe
       expect(screen.getByText('Tarea para eliminar')).toBeInTheDocument()
@@ -475,7 +652,11 @@ describe('Gestor de Tareas - App Principal', () => {
 
   describe('6. Guardar en localStorage', () => {
     it('debe guardar nuevas tareas en localStorage', async () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Crear nueva tarea
       const createButton = screen.getByRole('button', { name: /crear nueva tarea/i })
@@ -489,7 +670,7 @@ describe('Gestor de Tareas - App Principal', () => {
       
       // Verificar que se llamó a setItem
       expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
-        'lista-tareas.v2.Invitado',
+        'lista-tareas.v2.guest',
         expect.stringContaining('Tarea para localStorage')
       )
     })
@@ -500,16 +681,28 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Verificar que se llamó a getItem
-      expect(mockLocalStorage.getItem).toHaveBeenCalledWith('lista-tareas.user.v1')
-      expect(mockLocalStorage.getItem).toHaveBeenCalledWith('lista-tareas.v2.Invitado')
+      expect(mockLocalStorage.getItem).toHaveBeenCalledWith('lista-tareas.currentUser')
+      expect(mockLocalStorage.getItem).toHaveBeenCalledWith('lista-tareas.v2.guest')
       
       // Verificar que se muestra la tarea
       expect(screen.getByText('Tarea guardada')).toBeInTheDocument()
@@ -523,7 +716,11 @@ describe('Gestor de Tareas - App Principal', () => {
       })
       
       // Debe renderizar sin fallar
-      const { container } = render(<App />)
+      const { container } = render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       expect(container).toBeInTheDocument()
       
       // Debe mostrar el estado inicial (sin tareas)
@@ -533,28 +730,44 @@ describe('Gestor de Tareas - App Principal', () => {
 
   describe('Funcionalidades Adicionales', () => {
     it('debe mostrar el título principal "Gestor de Tareas"', () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const mainTitle = screen.getByRole('heading', { level: 1 })
       expect(mainTitle).toHaveTextContent('Gestor de Tareas')
     })
 
     it('debe mostrar el selector de usuario', () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const userDisplay = screen.getByText(/👤 Invitado/)
       expect(userDisplay).toBeInTheDocument()
     })
 
     it('debe mostrar las pestañas de navegación', () => {
-      render(<App />)
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       expect(screen.getByText('Tareas')).toBeInTheDocument()
       expect(screen.getByText('Estadísticas')).toBeInTheDocument()
     })
 
     it('debe mostrar el campo de búsqueda', () => {
-    render(<App />)
+    render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       const searchInput = screen.getByPlaceholderText('Buscar por título o descripción')
       expect(searchInput).toBeInTheDocument()
@@ -567,12 +780,24 @@ describe('Gestor de Tareas - App Principal', () => {
       ]
       
       mockLocalStorage.getItem.mockImplementation((key) => {
-        if (key === 'lista-tareas.user.v1') return 'Invitado'
-        if (key === 'lista-tareas.v2.Invitado') return JSON.stringify(mockTasks)
+        if (key === 'lista-tareas.users') return JSON.stringify([
+          { id: 'guest', username: 'Invitado', email: '', isGuest: true }
+        ])
+        if (key === 'lista-tareas.currentUser') return JSON.stringify({
+          id: 'guest',
+          username: 'Invitado',
+          email: '',
+          isGuest: true
+        })
+        if (key === 'lista-tareas.v2.guest') return JSON.stringify(mockTasks)
         return null
       })
       
-    render(<App />)
+    render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      )
       
       // Verificar que ambas tareas están visibles
       expect(screen.getByText('Tarea de trabajo')).toBeInTheDocument()
