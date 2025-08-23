@@ -186,5 +186,5 @@ Para preguntas o sugerencias, por favor abre un issue en el repositorio.
 
 **Desarrollado con ❤️ usando React, Vite y un sistema completo de autenticación**
 
-*Última actualización: Diciembre 2024*
+*Última actualización: 23 de agosto de 2025*
 
